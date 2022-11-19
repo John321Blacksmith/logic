@@ -5,6 +5,7 @@ from api import klen_market
 
 entity = input('What entity do you want to find?: ')
 
+
 def search_engine(request, site_dict: dict):
 	items = [key for key in site_dict.keys()]
 	

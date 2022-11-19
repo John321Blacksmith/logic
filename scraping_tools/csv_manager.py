@@ -18,7 +18,6 @@ def write_to_the_csv_file(contents, writer_object):
 		writer_object.writerow(contents[i])
 		
 
-
 def load_entire_data(links, file_name, item, site_dict: dict):
 	"""This function gets the web data and pushes it to the csv-file.
 	It is oriented on the dictionary that is received as an argument."""
