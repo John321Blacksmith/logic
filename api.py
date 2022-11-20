@@ -38,6 +38,19 @@ news_data = {
 	}	
 }
 
+ali_express = {
+    'products': {
+        'source': 'https://aliexpress.ru',
+        'cats_links': {'tag': 'a', 'class': 'snow-ali-kit_Typography__link__1shggo snow-ali-kit_Typography__link__1shggo snow-ali-kit_Typography__strong__1shggo snow-ali-kit_Typography__underline__1shggo SnowCategoriesMenu_CategoryItem__link__1mvfx'},
+        'object': {'tag': 'div', 'class': 'product-snippet_ProductSnippet__content__1ettdy'},
+        'title': {'tag': 'div', 'class': 'product-snippet_ProductSnippet__name__1ettdy'},
+        'integer': {'tag': 'div', 'class': 'snow-price_SnowPrice__mainM__18x8np'},
+        'image': {'tag': 'img', 'attribute': 'src'},
+        'link': {'tag': 'a', 'class': 'product-snippet_ProductSnippet__galleryBlock__1ettdy'}, 
+        'obj_components': ['titles', 'images', 'links', 'integers']
+    }
+}
+
 klen_market = {
     # this package works
     'knives': {
@@ -48,7 +61,7 @@ klen_market = {
         'integer': {'tag': 'span', 'class': 'price__current-value'},
         'title': {'tag': 'a'},
         'image': {'tag': 'img', 'attribute': 'data-src'},
-        'link': {'tag': 'a', 'attribute': 'href'},
+        'link': {'tag': 'a'},
         'obj_components': ['titles', 'images', 'integers', 'links']
     },
     'dishes': {

@@ -8,7 +8,6 @@ entity = input('What entity do you want to find?: ')
 
 def search_engine(request, site_dict: dict):
 	items = [key for key in site_dict.keys()]
-	
 	for item in items:
 		links = Df.get_each_page(site_dict[item]['source'], item, site_dict)
 		
@@ -29,7 +28,7 @@ def search_engine(request, site_dict: dict):
 						
 			else:
 				print(f'No matches on the \'{links[i]}\'')
-				
-		
+					
+
 if __name__ == '__main__':
 	search_engine(entity, klen_market)

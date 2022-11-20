@@ -65,15 +65,17 @@ class DataFetcher(Soup):
 
         soup = Soup.get_soup(source)
 
-        all_vendors = soup.find_all(site_dict[item]['cats_links']['tag'], site_dict[item]['cats_links']['class'])
-        vendors_links = []
+        all_categories = soup.find_all(site_dict[item]['cats_links']['tag'], site_dict[item]['cats_links']['class'])
+        categories_links = []
 
-        for i in all_vendors:
-            link = site_dict[item]['source'][:21] + i['href']
-            vendors_links.append(link)
+        third_slash = DataFetcher.inspect_slashes(source, 3)
+
+        for category in all_categories:
+            link = source[:third_slash] + '/' + category['href'][1:]
+            categories_links.append(link)
 
         else:
-            return vendors_links
+            return categories_links
 
     @staticmethod
     def refine_string(string: str):
@@ -86,15 +88,15 @@ class DataFetcher(Soup):
         return new_string
 
     @staticmethod
-    def inspect_slashes(seq: str):
+    def inspect_slashes(seq: str, slash_num: int):
         """this method iterates through the string
              and finds the third forward slash inside one and
-             returns its index."""
+             returns its position."""
         count = 0
         for i in range(0, len(seq)):
             if seq[i] == '/':
                 count += 1
-                if count == 3:
+                if count == slash_num:
                     return i
                 else:
                     continue
@@ -165,7 +167,7 @@ class DataFetcher(Soup):
                 # if it is not, a root link is cut off from the main source of the item
                 else:
                     # fetching an end point of the sliced string
-                    third_slash = DataFetcher.inspect_slashes(site_dict[item]['source'])
+                    third_slash = DataFetcher.inspect_slashes(site_dict[item]['source'], 3)
                     # then the main source string slice, an additional slash and the uncomplete href are substracted
                     link = source[:third_slash] + '/' + snippet[1:]
                 # -|-|-|-|-|-
@@ -186,7 +188,18 @@ class DataFetcher(Soup):
                             # if so, the attribute is checked if it has a comprehensive link
                             if i[attr].startswith('https://'):
                                 # -|-|-|-|-|-
-                                content['images'].append(i[attr])
+                                image_link = i[attr]
+                            else:
+                                if i[attr].startswith('//'):
+                                    first_slash = DataFetcher.inspect_slashes(site_dict[item]['source'], 1)
+                                    image_link = site_dict[item]['source'][:first_slash] + '/' + i[attr][1:]
+                                else:
+                                    third_slash = DataFetcher.inspect_slashes(site_dict[item]['source'], 3)
+                                    image_link = site_dict[item]['source'][:third_slash] + '/' + i[attr][1:]
+
+
+                            # append this entity to the images family
+                            content['images'].append(image_link)
 
         # and eventually, the content dictionary is created and returned as a dict object
         return content
