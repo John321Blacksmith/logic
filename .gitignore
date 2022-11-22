@@ -2,4 +2,4 @@
 __pycache__/
 scraping_tools/__pycache__/
 logic_env/
-logic/test.py
+test.py
