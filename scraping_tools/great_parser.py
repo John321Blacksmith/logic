@@ -14,7 +14,7 @@ class Soup(Bs):
 
    @staticmethod
    def get_soup(source, loc_file=False):
-      """Returns a soup."""
+      """Returning a soup."""
 
       my_headers = {
          'User-Agent':
@@ -68,12 +68,15 @@ class DataFetcher(Soup):
       super().__init__()
 
    @staticmethod
-   def get_each_page(source, item, site_dict: dict):
+   def get_each_page(source, item, site_dict: dict, loc_file=False):
       """A method gets from the categories' page a link from each
         category in order to perform then the same operation
         as I have done before recursively."""
-
-      soup = Soup.get_soup(source)
+        
+      if loc_file:
+      	soup = DataFetcher.get_soup(source, loc_file=True)
+      if not loc_file:
+      	soup = Soup.get_soup(source)
 
       all_categories = soup.find_all(site_dict[item]['cats_links']['tag'],
                                      site_dict[item]['cats_links']['class'])
@@ -87,6 +90,32 @@ class DataFetcher(Soup):
 
       else:
          return categories_links
+         
+   @staticmethod
+   def get_a_generic_pages_amount(source,
+   								  item,
+   								  site_dict: dict,
+   								  loc_file=False):
+    	"""This method finds out how many objects there are in the
+    	 current category in total. Then it returns an actual number
+    	 of pages to be in the category."""
+    	
+    	if loc_file:
+    		soup = DataFetcher.get_soup(source, loc_file=True)
+    	if not loc_file:
+    		soup = DataFetcher.get_soup(source)
+    		
+    	list_of_objects = soup.find_all(site_dict[item]['object']['tag'],
+    									site_dict[item]['object']['class'])
+    									
+    	objs_quantity_per_page = len(list_of_objects)
+    	total_objs_quantity = DataFetcher.refine_string(soup.find(site_dict[item]['generic_quantity']['tag'],
+    																  site_dict[item]['generic_quantity']['class']).text,
+    																  numbers_only=True)
+    	
+    	total_number_of_pages = total_objs_quantity // objs_quantity_per_page
+    	
+    	return total_number_of_pages
 
    @staticmethod
    def refine_string(problematic_string: str, numbers_only=False):
@@ -96,16 +125,16 @@ class DataFetcher(Soup):
 
       if numbers_only:
          for letter in list(problematic_string):
+            #numbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '.']
+            #if letter in numbers:
             if letter.isdigit():
-               data += letter
+                data += letter
          else:
             result = int(data)
       else:
          for letter in list(problematic_string):
-            if (letter != '') and (letter != ' ') and (letter != '\n') and (
-                  letter != '\t'):
-                  	
-                  	data += letter
+            if (letter != '\n') and (letter != '\t'):
+                  data += letter
          else:
             result = data
 
@@ -162,6 +191,8 @@ class DataFetcher(Soup):
             if title != None:
                # if this entity is not None, it'll be sent to its family
                content['titles'].append(title.text)
+            else:
+            	content['titles'].append('empty')
 
          # derive some integers
          # -|-|-|-|-|-
@@ -196,8 +227,7 @@ class DataFetcher(Soup):
             # if it is not, a root link is cut off from the main source of the item
             else:
                # fetching an end point of the sliced string
-               third_slash = DataFetcher.inspect_slashes(
-                  site_dict[item]['source'], 3)
+               third_slash = DataFetcher.inspect_slashes(source, 3)
                # then the main source string slice, an additional slash and the uncomplete href are substracted
                link = source[:third_slash] + '/' + snippet[1:]
             # -|-|-|-|-|-
@@ -222,14 +252,12 @@ class DataFetcher(Soup):
                      else:
                         if i[attr].startswith('//'):
                            first_slash = DataFetcher.inspect_slashes(
-                              site_dict[item]['source'], 1)
-                           image_link = site_dict[item]['source'][:
-                                                                  first_slash] + '/' + i[attr][1:]
+                              source, 1)
+                           image_link = source[:first_slash] + '/' + i[attr][1:]
                         else:
                            third_slash = DataFetcher.inspect_slashes(
-                              site_dict[item]['source'], 3)
-                           image_link = site_dict[item]['source'][:
-                                                                  third_slash] + '/' + i[attr][1:]
+                              source, 3)
+                           image_link = source[:third_slash] + '/' + i[attr][1:]
 
                      # append this entity to the images family
                      content['images'].append(image_link)
@@ -304,7 +332,6 @@ class DataFetcher(Soup):
       if item_key in site_dict[item]['obj_components']:
          obj_entity = content_dict[item_key][order_num]
          if (item_key == 'titles') or (item_key == 'integers'):
-            obj_dict[item_key[:-1]] = obj_entity.strip()
+            obj_dict[item_key[:-1]] = DataFetcher.refine_string(obj_entity)
          else:
             obj_dict[item_key[:-1]] = obj_entity
-

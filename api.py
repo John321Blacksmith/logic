@@ -39,15 +39,68 @@ news_data = {
 }
 
 ali_express = {
-    'products': {
-        'source': 'https://aliexpress.ru',
-        'cats_links': {'tag': 'a', 'class': 'snow-ali-kit_Typography__link__1shggo snow-ali-kit_Typography__link__1shggo snow-ali-kit_Typography__strong__1shggo snow-ali-kit_Typography__underline__1shggo SnowCategoriesMenu_CategoryItem__link__1mvfx'},
+    'ali_express_object': {
+        'cats_links': {'tag': 'a', 'class': 'SnowSearchSubcategories_CategoriesSnippets__link__14ap2'},
+        'generic_quantity': {'tag': 'span', 'class': 'snow-ali-kit_Typography__base__1shggo snow-ali-kit_Typography-Secondary__base__1i67dw snow-ali-kit_Typography__sizeTextM__1shggo SnowSearchHeading_SnowSearchHeading__count__b9qvy'},
         'object': {'tag': 'div', 'class': 'product-snippet_ProductSnippet__content__1ettdy'},
-        'title': {'tag': 'div', 'class': 'product-snippet_ProductSnippet__name__1ettdy'},
-        'integer': {'tag': 'div', 'class': 'snow-price_SnowPrice__mainM__18x8np'},
-        'image': {'tag': 'img', 'attribute': 'src'},
-        'link': {'tag': 'a', 'class': 'product-snippet_ProductSnippet__galleryBlock__1ettdy'}, 
-        'obj_components': ['titles', 'images', 'links', 'integers']
+    	'title': {'tag': 'div', 'class': 'product-snippet_ProductSnippet__name__1ettdy'},
+    	'integer': {'tag': 'div', 'class': 'snow-price_SnowPrice__mainM__18x8np'},
+    	'link': {'tag': 'a'},
+    	'image': {'tag': 'img', 'attribute': 'src'},
+        'obj_components': ['titles', 'images', 'links', 'integers', 'quantities']
+    },
+    
+    'food': {
+    	'source': 'https://aliexpress.ru/category/202000001/food.html',
+    	'supplement': '?g=y&page={i}&spm=a2g2w'
+    },
+    
+    'home-appliances': {
+    	'source': 'https://aliexpress.ru/category/202000005/home-appliances.html'
+    },
+    
+    'home-improvement': {
+    	'source': 'https://aliexpress.ru/category/202000007/home-improvement.html'
+    },
+    
+    'computer-office': {
+    	'source': 'https://aliexpress.ru/category/202000006/computer-office.html'
+    },
+    
+    'home-garden': {
+    	'source': 'https://aliexpress.ru/category/202000008/home-garden.html'
+    },
+    
+    'sports_entertainment': {
+    	'source': 'https://aliexpress.ru/category/202000010/sports-entertainment.html'
+    },
+    
+    'education-office-supplies': {
+    	'source': 'https://aliexpress.ru/category/202000011/education-office-supplies.html'
+    },
+    
+    'toys-hobbies': {
+    	'source': 'https://aliexpress.ru/category/202000013/toys-hobbies.html'
+    },
+    
+    'security-protection': {
+    	'source': 'https://aliexpress.ru/category/202000014/security-protection.html'
+    },
+    
+    'automobiles-motorcycles': {
+    	'source': 'https://aliexpress.ru/category/202000015/automobiles-motorcycles.html'
+    },
+    
+    'lights-lighting': {
+    	'source': 'https://aliexpress.ru/category/202000016/lights-lighting.html'
+    },
+    
+    'consumer-electronics': {
+    	'source': 'https://aliexpress.ru/category/202000020/consumer-electronics.html'
+    },
+    
+    'beauty-health': {
+    	'source': 'https://aliexpress.ru/category/202000021/beauty-health.html'
     }
 }
 
@@ -61,7 +114,7 @@ klen_market = {
         'integer': {'tag': 'span', 'class': 'price__current-value'},
         'title': {'tag': 'a'},
         'image': {'tag': 'img', 'attribute': 'data-src'},
-        'link': {'tag': 'a'},
+        'link': {'tag': 'a', 'attribute': 'href'},
         'obj_components': ['titles', 'images', 'integers', 'links']
     },
     'dishes': {
