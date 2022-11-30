@@ -275,12 +275,6 @@ class DataFetcher(Soup):
       list_of_objects = []
 
       quantities = []
-
-      # derive all the keys from the content dictionary
-      # in order to use each one as a key from each
-      # list in the content dictionary and find an
-      # amount of every list respectively.
-
       keys = [key for key in content_dict.keys()]
 
       for i in range(0, len(keys)):
@@ -288,37 +282,23 @@ class DataFetcher(Soup):
          num = len(content_dict[keys[i]])
          # check if the list is not empty
          if num != 0:
-            # if so, the number of list items is appended to the list above
             quantities.append(num)
 
       # check if the list of amounts is not empty
       if len(quantities) != 0:
          # if so, this list is processed by the sorting algorithm
          ob = SortData(quantities)
-         # In order to structure all the elements from
-         # different lists rationally and create objects,
-         # a smallest value of the list of amounts is got so
-         # as not to let some lists be greater of amount, for
-         # all the four lists must be of the same length.
          actual_num = ob.find_smallest()
-
-         # then we use a stead number got from the list and
-         # go along that number. The number of objetcs must
-         # be as well as the actual number itself represents
          for i in range(0, actual_num):
             # every object is constructed as a dictionary
             obj = {}
 
-            # before every item of object is included to the object, there is a check
-            # if a required key is in the item list of components
             for key in keys:
-               DataFetcher.check_components(i, item, key, site_dict,
-                                            content_dict, obj)
+               DataFetcher.check_components(i, item, key, site_dict, content_dict, obj)
 
             # when the object dict is constructed, it is moved to the list of objects
             list_of_objects.append(obj)
 
-      # eventually, the list of all the web objects is returned
       return list_of_objects
 
    @staticmethod
@@ -328,6 +308,8 @@ class DataFetcher(Soup):
                         site_dict: dict,
                         content_dict: dict,
                         obj_dict: dict):
+    # before every item of object is included to the object, there is a check
+    # if a required key is in the item list of components
 
       if item_key in site_dict[item]['obj_components']:
          obj_entity = content_dict[item_key][order_num]
