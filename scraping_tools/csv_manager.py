@@ -6,7 +6,7 @@ from .great_parser import DataFetcher as Df
 
 
 class FileManager(Df, Workbook):
-	def __init__(self): 
+	def __init__(self):
 		super().__init__()
 
 	def write_to_the_text_file(self, file_name, content):
@@ -22,16 +22,12 @@ class FileManager(Df, Workbook):
 
 
 	def write_to_the_csv_file(self,
-								file_name,
-								source,
-								item,
-								site_dict: dict,
-								lang='en'):
+							  file_name,
+							  source,
+							  item,
+							  site_dict: dict):
 
 		fields = ['title', 'integer', 'link', 'image']
-
-		if lang == 'ru':
-			fields = ['Наименование', 'Цена', 'Ссылка', 'Изображение']
 
 		# open or create a csv file and create a writer object
 
@@ -49,30 +45,43 @@ class FileManager(Df, Workbook):
 				print(f'The data has been successfully loaded to the file \'{file_name}\'.')
 
 
-	def write_to_the_excel_file(self, csv_file_name, cols_names):
+	def write_to_the_excel_file(self,
+								csv_file_name,
+								cols_names,
+								excel_file=None,
+								ws_title=None):
 
-		wb = load_workbook(filename=csv_file_name)
+		if excel_file:
+			wb = load_workbook(filename=excel_file)
+		else:
+			excel_file = csv_file_name[:-4] + '.xlsx'
+			wb = Workbook()
 
 		# activate a workbook 
 		work_sheet = wb.active
 
 		# define a worksheet name
-		# ws.title = ws_title
+		if ws_title:
+			work_sheet.title = ws_title
 
-		with open(csv_file_name, mode='r') as f:
-			csv_reader = csv.reader(f, delimiter=',')
+		try:
+			with open(csv_file_name, mode='r', encoding='utf-8') as f:
+				csv_reader = csv.reader(f, delimiter=',')
 
-			line_count = 0
-			for row in csv_reader:
-				if line_count == 0:
-					work_sheet.append(cols_names)
-					line_count += 1
-				else:
-					if [row[0], row[1], row[2], row[3]] != ['title', 'integer', 'link', 'image']:
-						work_sheet.append(row[0], row[1] + ' rub', row[2], row[3])
+				line_count = 0
+				for row in csv_reader:
+					if line_count == 0:
+						work_sheet.append(cols_names)
 						line_count += 1
-			else:
-				excel_file = csv_file_name[:-4] + '.xlsx'
-				wb.save(excel_file)
+					else:
 
-		print(f'Created file \'{excel_file}\'.')
+						if row != ['title', 'integer', 'link', 'image']:
+							work_sheet.append(row)
+							line_count += 1
+				else:
+					wb.save(excel_file)
+
+			print(f'Created file \'{excel_file}\'.')
+
+		except FileNotFoundError:
+			print(f'The file \'{csv_file_name}\' not found.')
