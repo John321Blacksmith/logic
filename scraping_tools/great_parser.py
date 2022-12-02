@@ -195,18 +195,14 @@ class DataFetcher(Soup):
             	content['titles'].append('empty')
 
          # derive some integers
-         # -|-|-|-|-|-
          if 'integers' in site_dict[item]['obj_components']:
             numbers = obj.find(site_dict[item]['integer']['tag'],
                                site_dict[item]['integer']['class'])
             if numbers != None:
-               # -|-|-|-|-|-
                content['integers'].append(numbers.text)
 
          # derive a link
-         # -|-|-|-|-|-
          if 'links' in site_dict[item]['obj_components']:
-            # -|-|-|-|-|-
             if 'class' in site_dict[item]['link'].keys():
                link_element = obj.find(site_dict[item]['link']['tag'],
                                        site_dict[item]['link']['class'])
@@ -230,11 +226,10 @@ class DataFetcher(Soup):
                third_slash = DataFetcher.inspect_slashes(source, 3)
                # then the main source string slice, an additional slash and the uncomplete href are substracted
                link = source[:third_slash] + '/' + snippet[1:]
-            # -|-|-|-|-|-
+            
             content['links'].append(link)
 
          # derive all the images in the product model
-         # -|-|-|-|-|-
          if 'images' in site_dict[item]['obj_components']:
             # here we find all the images inlined in the list object
             images_house = obj.find_all(site_dict[item]['image']['tag'])
@@ -247,7 +242,6 @@ class DataFetcher(Soup):
                   if attr == site_dict[item]['image']['attribute']:
                      # if so, the attribute is checked if it has a comprehensive link
                      if i[attr].startswith('https://'):
-                        # -|-|-|-|-|-
                         image_link = i[attr]
                      else:
                         if i[attr].startswith('//'):
