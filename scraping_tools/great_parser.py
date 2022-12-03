@@ -82,7 +82,7 @@ class DataFetcher(Soup):
                                      site_dict[item]['cats_links']['class'])
       categories_links = []
 
-      third_slash = DataFetcher.inspect_slashes(source, 3)
+      third_slash = DataFetcher.inspect_signs('/', source, 3)
 
       for category in all_categories:
          link = source[:third_slash] + '/' + category['href'][1:]
@@ -125,12 +125,14 @@ class DataFetcher(Soup):
 
       if numbers_only:
          for letter in list(problematic_string):
-            #numbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '.']
-            #if letter in numbers:
-            if letter.isdigit():
+            if (letter.isdigit()) or (letter == ','):
                 data += letter
          else:
-            result = int(data)
+            if data.find(','):
+               decimal = data.replace(',', '.')
+               result = float(decimal)
+            else:
+               result = int(data)
       else:
          for letter in list(problematic_string):
             if (letter != '\n') and (letter != '\t'):
@@ -141,15 +143,16 @@ class DataFetcher(Soup):
       return result
 
    @staticmethod
-   def inspect_slashes(seq: str, slash_num: int):
-      """this method iterates through the string
-             and finds the third forward slash inside one and
-             returns its position."""
+   def inspect_signs(sign: str, seq: str, sign_num: int):
+      """This method gets a sign to search and the row of data to
+         be inspected and iterates then through the row
+         and finds the issued sign inside one and
+         returns its position."""
       count = 0
       for i in range(0, len(seq)):
-         if seq[i] == '/':
+         if seq[i] == sign:
             count += 1
-            if count == slash_num:
+            if count == sign_num:
                return i
             else:
                continue
@@ -223,7 +226,7 @@ class DataFetcher(Soup):
             # if it is not, a root link is cut off from the main source of the item
             else:
                # fetching an end point of the sliced string
-               third_slash = DataFetcher.inspect_slashes(source, 3)
+               third_slash = DataFetcher.inspect_signs('/', source, 3)
                # then the main source string slice, an additional slash and the uncomplete href are substracted
                link = source[:third_slash] + '/' + snippet[1:]
             
@@ -245,11 +248,11 @@ class DataFetcher(Soup):
                         image_link = i[attr]
                      else:
                         if i[attr].startswith('//'):
-                           first_slash = DataFetcher.inspect_slashes(
+                           first_slash = DataFetcher.inspect_signs('/',
                               source, 1)
                            image_link = source[:first_slash] + '/' + i[attr][1:]
                         else:
-                           third_slash = DataFetcher.inspect_slashes(
+                           third_slash = DataFetcher.inspect_signs('/',
                               source, 3)
                            image_link = source[:third_slash] + '/' + i[attr][1:]
 
@@ -307,7 +310,9 @@ class DataFetcher(Soup):
 
       if item_key in site_dict[item]['obj_components']:
          obj_entity = content_dict[item_key][order_num]
-         if (item_key == 'titles') or (item_key == 'integers'):
+         if item_key == 'titles':
             obj_dict[item_key[:-1]] = DataFetcher.refine_string(obj_entity)
+         if item_key == 'integers':
+            obj_dict[item_key[:-1]] = DataFetcher.refine_string(obj_entity, numbers_only=True)
          else:
             obj_dict[item_key[:-1]] = obj_entity

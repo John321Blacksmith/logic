@@ -42,8 +42,8 @@ ali_express = {
     'ali_express_object': {
         'cats_links': {'tag': 'a', 'class': 'SnowSearchSubcategories_CategoriesSnippets__link__14ap2'},
         'generic_quantity': {'tag': 'span', 'class': 'snow-ali-kit_Typography__base__1shggo snow-ali-kit_Typography-Secondary__base__1i67dw snow-ali-kit_Typography__sizeTextM__1shggo SnowSearchHeading_SnowSearchHeading__count__b9qvy'},
-        'object': {'tag': 'div', 'class': 'product-snippet_ProductSnippet__content__1ettdy'},
-    	'title': {'tag': 'div', 'class': 'product-snippet_ProductSnippet__name__1ettdy'},
+        'object': {'tag': 'div', 'class': 'product-snippet_ProductSnippet__content__lido9p'},
+    	'title': {'tag': 'div', 'class': 'product-snippet_ProductSnippet__name__lido9p'},
     	'integer': {'tag': 'div', 'class': 'snow-price_SnowPrice__mainM__18x8np'},
     	'link': {'tag': 'a'},
     	'image': {'tag': 'img', 'attribute': 'src'},
