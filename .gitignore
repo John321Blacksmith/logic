@@ -1,6 +1,6 @@
 .idea/
-data_manager/my_database.ini
 __pycache__/
-scraping_tools/__pycache__/
-logic_env/
+market_env/
 test.py
+logic_side/scraping_tools/__pycache__/
+logic_side/data_manager/my_database.ini
