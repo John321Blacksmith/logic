@@ -10,9 +10,14 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
+import sys
 from pathlib import Path
-from secrets import secret_key
-from online_market.logic_side.data_manager.config import config
+from . import secrs
+
+sys.path.append(secrs.project_location)
+
+
+from logic_side.data_manager.config import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -22,7 +27,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = secret_key
+SECRET_KEY = secrs.secret_key
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -74,15 +79,16 @@ WSGI_APPLICATION = 'online_market.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
-db_params = config('online_market//logic_side//data_manager//my_database.ini')
+db_params = config(secrs.params_location)
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
         'NAME': db_params['database'],
-        'HOST': db_params['host'], 
+        'USER': db_params['user'],
         'PASSWORD': db_params['password'],
-        'USER': db_params['username']
+        'HOST': db_params['host'], 
+        'PORT': db_params['port']
     }
 }
 
