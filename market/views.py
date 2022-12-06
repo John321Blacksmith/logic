@@ -25,3 +25,7 @@ def index(request):
 	context = {'products': objects}
 
 	return render(request, 'market/index.html', context)
+
+
+def update_storage(request):
+	pass

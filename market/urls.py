@@ -7,4 +7,5 @@ app_name = 'market'
 urlpatterns = [
 	# index page pattern
 	path('', views.index, name='index'),
+	path('', views.update_storage, name='update'),
 ]
