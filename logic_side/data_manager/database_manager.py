@@ -131,13 +131,63 @@ def create_table(conn, query, tables):
 			conn.close()
 
 
-def update_data(conn, query, tables):
+def update_data(conn, table, new_objects):
 	"""this function updates the data in the table."""
 
-	cursor = conn.cursor()
+	# id selection query
+	select_ids = """SELECT {0} FROM {1} ORDER BY {0} DESC;"""
 
-	for table in tables:
-		pass
+	# updating query 
+	updating_query = """UPDATE {0}
+						SET product_title = {1},
+							product_price = {2},
+							product_link = {3},
+							product_image = {4}
+						WHERE product_id = {5};"""
+
+	try:
+		# create a cursor
+		cursor = conn.cursor()
+
+		cursor.execute(select_ids.format('product_id', table))
+
+		# getting an id of the last object in the list
+		last_id = cursor.fetchone()[0]
+
+		# getting in amount of rows so to substract it from the value of the last id
+		num_of_rows = cursor.rowcount
+
+		# get the first object id
+		first_id = (last_id - num_of_rows)
+
+		# getting started with updating from the first object
+
+		# if the values of both the length of new_objs list
+		# and the amount of rows are equal, the iteration will be performed
+
+		if len(news_objs) == num_of_rows:
+			for i in range(0, len(new_objs)):
+
+				# pick up the current id where the first object stands on
+				current_id = first_id + i
+			
+				# take each object in the right order
+				obj = new_obj[i]
+
+				# execute the updataing query to each existing row in the database table
+				cursor.execute(updating_query.format(table, obj['title'], obj['integer'], obj['link'], obj['image'], current_id))
+
+
+		# shut down the cursor
+		cursor.close()
+
+	except (Exception, psycopg2.DatabaseError) as error:
+		print(ERROR + str(error))
+
+	finally:
+		if conn is not None:
+			conn.close()
+
 
 def delete_data():
 	pass

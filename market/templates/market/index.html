@@ -7,11 +7,12 @@
 		.card {
 			box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1);
 			transition: 0.3s;
-			width: 40%;
 		}
+
 		.card:hover {
 			box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
 		}
+
 		.container {
 			padding: 2px 16px;
 		}
@@ -21,14 +22,18 @@
 	<p>This is a main page</p>
 	<button type='button' action={% url 'market:update' %}>update storage</button>
 	{% for product in products %}
-		<div class='card'>
-			<img src={{ product.image }} alt={{ product.title }}>
-			<div class='container'>
-				<p>{{ product.title }}</p>
-				<h4>Price: {{ product.price }} rub</h4>
-				<a href={{ product.link }} role='button'>Go</a>
+	<div class='row'>
+		<div class='column'>
+			<div class='card'>
+				<img src={{ product.image }} alt={{ product.title }}>
+				<div class='container'>
+					<p>{{ product.title }}</p>
+					<h4>Price: {{ product.price }} rub</h4>
+					<a href={{ product.link }} role='button'>Go</a>
+				</div>
 			</div>
 		</div>
+	</div>
 
 		{% empty %}
 		<p>Empty yet</p>
