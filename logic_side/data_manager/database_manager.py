@@ -27,7 +27,7 @@ def connect_to_the_db(filename):
 		return connection
 
 
-def insert_data(conn, query, objects, tables):
+def insert_data(conn, query, objects):
 
 	# create a cursor
 	cursor = conn.cursor()
@@ -139,10 +139,10 @@ def update_data(conn, table, new_objects):
 
 	# updating query 
 	updating_query = """UPDATE {0}
-						SET product_title = {1},
-							product_price = {2},
-							product_link = {3},
-							product_image = {4}
+						SET product_name = '{1}',
+							product_price = '{2}',
+							product_link = '{3}',
+							product_image = '{4}'
 						WHERE product_id = {5};"""
 
 	try:
@@ -154,7 +154,7 @@ def update_data(conn, table, new_objects):
 		# getting an id of the last object in the list
 		last_id = cursor.fetchone()[0]
 
-		# getting in amount of rows so to substract it from the value of the last id
+		# getting an amount of rows so to substract it from the value of the last id
 		num_of_rows = cursor.rowcount
 
 		# get the first object id
@@ -165,17 +165,21 @@ def update_data(conn, table, new_objects):
 		# if the values of both the length of new_objs list
 		# and the amount of rows are equal, the iteration will be performed
 
-		if len(news_objs) == num_of_rows:
-			for i in range(0, len(new_objs)):
+		# if len(news_objs) == num_of_rows:
+		for i in range(0, len(new_objects)):
 
 				# pick up the current id where the first object stands on
-				current_id = first_id + i
+			current_id = first_id + i
 			
 				# take each object in the right order
-				obj = new_obj[i]
+			obj = new_objects[i]
 
 				# execute the updataing query to each existing row in the database table
-				cursor.execute(updating_query.format(table, obj['title'], obj['integer'], obj['link'], obj['image'], current_id))
+			cursor.execute(updating_query.format(table, obj['title'], obj['integer'], obj['link'], obj['image'], current_id))
+		# else:
+			# print(f'the table \'{table}\' has been uploaded.')
+		# else:
+			# pass
 
 
 		# shut down the cursor

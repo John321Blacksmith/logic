@@ -4,7 +4,10 @@ from django.shortcuts import render
 
 sys.path.append(secrs.project_location)
 
+from logic_side.data_manager.config import config
 from logic_side.data_manager import database_manager
+from logic_side.scraping_tools.great_parser import DataFetcher
+from api import ali_express
 
 # Create your views here.
 
@@ -27,5 +30,14 @@ def index(request):
 	return render(request, 'market/index.html', context)
 
 
-def update_storage(request):
-	pass
+def update_storage():
+	links = DataFetcher.get_each_page(ali_express['food']['source'], 'ali_express_object', ali_express)
+
+	content = DataFetcher.fetch_content(links[4], 'ali_express_object', ali_express)
+
+	products = DataFetcher.structure_data('ali_express_object', ali_express, content)
+
+# # connection object
+	connection = database_manager.connect_to_the_db('logic_side//data_manager//my_database.ini')
+
+	database_manager.update_data(connection, 'food', products[:21])

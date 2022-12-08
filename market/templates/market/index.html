@@ -20,7 +20,7 @@
 </head> 
 <body>
 	<p>This is a main page</p>
-	<button type='button' action={% url 'market:update' %}>update storage</button>
+	<a href={% url 'market:update' %} type="button">update storage</a>
 	{% for product in products %}
 	<div class='row'>
 		<div class='column'>
