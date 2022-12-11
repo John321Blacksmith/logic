@@ -15,6 +15,11 @@ from api import ali_express
 def index(request):
 	"""This function renders a main page of the market."""
 
+	# this page contains the top-most goods classified to the categories
+	# there are the categories of either food and the other products at sidebars,
+	# and there are the newest or price-offed products gathered from different
+	# markets(sites) in the main site square.
+
 	 # a selection query command
 	selection_query = """SELECT {0}, {1}, {2}, {3} FROM {4};"""
 
@@ -31,13 +36,4 @@ def index(request):
 
 
 def update_storage():
-	links = DataFetcher.get_each_page(ali_express['food']['source'], 'ali_express_object', ali_express)
-
-	content = DataFetcher.fetch_content(links[4], 'ali_express_object', ali_express)
-
-	products = DataFetcher.structure_data('ali_express_object', ali_express, content)
-
-# # connection object
-	connection = database_manager.connect_to_the_db('logic_side//data_manager//my_database.ini')
-
-	database_manager.update_data(connection, 'food', products[:21])
+	pass

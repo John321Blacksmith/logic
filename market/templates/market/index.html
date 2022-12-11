@@ -4,40 +4,30 @@
 	<title>market</title>
 	<meta name='viewport' content='width=device-width', initial-scale=1>
 	<style>
-		.card {
-			box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1);
-			transition: 0.3s;
-		}
-
-		.card:hover {
-			box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
-		}
-
-		.container {
-			padding: 2px 16px;
+		.ul {
+			color: darkred;
 		}
 	</style>
 </head> 
 <body>
-	<p>This is a main page</p>
-	<a href={% url 'market:update' %} type="button">update storage</a>
-	{% for product in products %}
-	<div class='row'>
-		<div class='column'>
-			<div class='card'>
-				<img src={{ product.image }} alt={{ product.title }}>
-				<div class='container'>
-					<p>{{ product.title }}</p>
-					<h4>Price: {{ product.price }} rub</h4>
-					<a href={{ product.link }} role='button'>Go</a>
-				</div>
-			</div>
-		</div>
-	</div>
-
-		{% empty %}
-		<p>Empty yet</p>
-		{% endfor %}
-
+	<header>
+		<h2>Your Market</h2>
+	</header>
+	<main>
+		<ul>
+			<li><a href="None">Food</a></li>
+			<li><a href="None">Kitchen</a></li> <!-- java script action -->
+			<li><a href="None">Electrical Equipment</a></li>
+			<li><a href="None">Garden</a></li>
+			<li><a href="None">For Kids</a></li>
+			<li><a href="None">Tools</a></li>
+			<li><a href="None">For Fitness</a></li>
+			<li><a href="None">Auto-Moto</a></li>
+			<li><a href="None">Beauty And Health</a></li>
+		</ul>
+	</main>
+	<footer>
+		None
+	</footer>
 </body>
 </html>
