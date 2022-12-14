@@ -35,5 +35,46 @@ def index(request):
 	return render(request, 'market/index.html', context)
 
 
-def update_storage():
-	pass
+def get_food(request):
+	context = {}
+	return render(request, 'market/food.html', context)
+
+
+def get_kitchen(request):
+	context = {}
+	return render(request, 'market/kitchen.html')
+
+
+def get_electrical_equipment(request):
+	context = {}
+	return render(request, 'market/electr_eqnt.html', context)
+
+
+def get_garden(request):
+	context = {}
+	return render(request, 'market/get_garden.html', context)
+
+
+def get_kids_stuff(request):
+	context = {}
+	return render(request, 'market/kids_stuff.html', context)
+
+
+def get_tools(request):
+	context = {}
+	return render(request, 'market/tools.html', context)
+
+
+def get_fitness_stuff(request):
+	context = {}
+	return render(request, 'market/fitness_stuff.html', context)
+
+
+def get_auto_and_moto(request):
+	context = {}
+	return render(request, 'market/auto_moto.html', context)
+
+
+def get_beaut_and_health(request):
+	context = {}
+	return render(request, 'market/beauty_health.html', context)

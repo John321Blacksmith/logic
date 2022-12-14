@@ -4,40 +4,17 @@
 	<title>market</title>
 	<meta name='viewport' content='width=device-width', initial-scale=1>
 	<style>
-		.menu-button {
-			display: inline-block;
-			cursor: pointer;
-		}
-
-		.bar1, .bar2, .bar3 {
-				width: 35px;
-				height: 5px;
-				background-color: #333;
-				margin: 6px 0;
-				transition: 0.4s;
-		}
-
-		.change .bar1 {
-			transform: translate(0, 11px) rotate(-45deg);
-		}
-		.change .bar2 {
-			opacity: 0;
-		}
-		.change .bar3 {
-			transform: translate(0, -11px) rotate(45deg);
-		}
-
 		.sidenav {
 			height: 100%;
-			width: 0;
+			width:250px;
 			position: fixed;
 			z-index: 1;
 			top: 0;
 			left: 0;
 			background-color: #111;
-			overflow: hidden;
-			padding-top: 60px;
+			overflow-x: hidden;
 			transition: 0.5s;
+			padding-top: 60px;
 		}
 
 		.sidenav a {
@@ -49,6 +26,10 @@
 			transition: 0.3s;
 		}
 
+		.sidenav a:hover {
+			color: #f1f1f1;
+		}
+
 		.sidenav .closebtn {
 			position: absolute;
 			top: 0;
@@ -56,44 +37,65 @@
 			font-size: 36px;
 			margin-left: 50px;
 		}
+
+		@media only screen and (max-height: 450px) {
+			.sidenav {padding-top: 15px;}
+			.sidenav a {font-size: 18px;}
+		}
+
 	</style>
 </head> 
 <body>
-	<h2 id="title">Your Market</h2>
+	<!-- <h2 id="title">Your Market</h2> -->
 	<header>
-		<div class="menu-button" onclick="onenNav()">
-			<div class="bar1"></div>
-			<div class="bar2"></div>
-			<div class="bar3"></div>
+		<div id="mySidenav" class="sidenav" style='display:block;'>
+			<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+			<a href="{% url 'market:food' %}">Food</a>
+			<a href="{% url 'market:kitchen' %}">Kitchen</a>
+			<a href="{% url 'market:el_equip' %}">Electrical Equipment</a>
+			<a href="{% url 'market:garden' %}">Garden</a>
+			<a href="{% url 'market:kids_stuff' %}">For Kids</a>
+			<a href="{% url 'market:tools' %}">Tools</a>
+			<a href="{% url 'market:fitness_stuff' %}">For Fitness</a>
+			<a href="{% url 'market:auto_moto' %}">Auto-Moto</a>
+			<a href="{% url 'market:beauty_health' %}">Beauty And Health</a>
 		</div>
-		<div id="SideNav" class="sidenav">
-			<a href="javascripts:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-			<a href="#">Food</a>
-			<a href="#">Kitchen</a>
-			<a href="#">Electrical Equipment</a>
-			<a href="#">Garden</a>
-			<a href="#">For Kids</a>
-			<a href="#">Tools</a>
-			<a href="#">For Fitness</a>
-			<a href="#">Auto-Moto</a>
-			<a href="#">Beauty And Health</a>
-			</div>
-	</header>	
-	<main>
-			
-	</main>
-	<footer>
-		None
-	</footer>
-	<script type="text/javascript">
 
+		<span onclick="openNav()" style="cursor:pointer">&#9776;</span>
+	</header>
+	<main>
+		<div class="row">
+		<!-- the iteration goes here -->
+		{% for product in products %}
+			<div class="card">
+				<a href={{ product.link }} class="product-access">
+					<img class="card-image" src={{ product.image }}>
+					<div class="card-content">
+						<h5>{{ product.title }}</h5>
+						<p>Price: {{ product.price }} RUB</p>
+					</div>
+				</a>
+			</div>
+			{% empty %}
+			<p>there are no any products yet
+		{% endfor %}		
+		</div>
+	</main>
+
+	<script type="text/javascript">
 		function openNav() {
-			document.getElememtById("SideNav").style.width = "250px";
+			let sidebar;
+			sidebar = document.getElememtById("mySidenav");
+			sidebar.style.display = 'block';
 		}
 
 		function closeNav() {
-			document.getElementById("SideNav").style.width = "0";
+			let sidebar;
+			sidebar = document.getElementById("mySidenav");
+			sidebar.style.display = 'none';
 		}
+
+
 	</script>
 </body>
 </html>
