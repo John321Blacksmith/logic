@@ -130,7 +130,10 @@ class DataFetcher(Soup):
          else:
             if data.find(','):
                decimal = data.replace(',', '.')
-               result = float(decimal)
+               if decimal == '':
+                  result = 'no data'
+               else:
+                  result = float(decimal)
             else:
                result = int(data)
       else:
@@ -185,7 +188,17 @@ class DataFetcher(Soup):
          if 'titles' in site_dict[item]['obj_components']:
             # if there is no a 'class' key in the 'title' object of the api item, a 'tag' key will be used only
             if 'class' not in site_dict[item]['title'].keys():
-               title = obj.find(site_dict[item]['title']['tag'])
+               if 'attribute' in site_dict[item]['title'].keys():
+                  titles_house = obj.find_all(site_dict[item]['title']['tag'])
+                  for t in titles_house:
+                     t_attrs = t.attrs
+                     for attr in t_attrs.keys():
+                        if attr == site_dict[item]['title']['attribute']:
+                           if t[attr] == site_dict[item]['title']['attr_value']:
+                              title = t
+               else:
+                  title = obj.find(site_dict[item]['title']['tag'])
+
             else:
                title = obj.find(site_dict[item]['title']['tag'],
                                 site_dict[item]['title']['class'])
