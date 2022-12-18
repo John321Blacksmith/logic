@@ -17,7 +17,7 @@ def index(request):
 
 	# this page contains the top-most goods classified to the categories
 	# there are the categories of either food and the other products at sidebars,
-	# and there are the newest or price-offed products gathered from different
+	# and there are the newest or price-offed highlighted products gathered from different
 	# markets(sites) in the main site square.
 
 	 # a selection query command
@@ -27,7 +27,7 @@ def index(request):
 	connection = database_manager.connect_to_the_db(secrs.params_location)
 
 	# get data from the storage
-	objects = database_manager.retrieve_data(connection, selection_query, 'food')
+	objects = database_manager.retrieve_data(connection, selection_query, 'highlights')
 
 	# create a context
 	context = {'products': objects}
