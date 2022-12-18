@@ -131,7 +131,7 @@ class DataFetcher(Soup):
             if data.find(','):
                decimal = data.replace(',', '.')
                if decimal == '':
-                  result = 'no data'
+                  result = None
                else:
                   result = float(decimal)
             else:
