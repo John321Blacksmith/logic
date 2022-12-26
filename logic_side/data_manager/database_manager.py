@@ -114,7 +114,12 @@ def create_table(conn, query, tables):
 
 		# operate a query
 		for table in tables:
-			cursor.execute(query.format(table))
+			try:
+				cursor.execute(query.format(table))
+			except (Exception, psycopg2.DatabaseError) as error:
+				print(error)
+			else:
+				print('The table \'{}\' has been successfuly created'.format(table))
 
 		# close the cursor
 		cursor.close()
@@ -122,7 +127,7 @@ def create_table(conn, query, tables):
 		# commit the changes
 		conn.commit()
 
-		print('table has been successfully created.')
+		print('Done.')
 	except (Exception, psycopg2.DatabaseError) as error:
 		print(ERROR + str(error))
 
