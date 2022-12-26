@@ -106,14 +106,15 @@ def retrieve_data(conn, query, table):
 
 	return objs
 
-def create_table(conn, query, table):
+def create_table(conn, query, tables):
 
 	try:
 		# create a cursor
 		cursor = conn.cursor()
 
 		# operate a query
-		cursor.execute(query.format(table))
+		for table in tables:
+			cursor.execute(query.format(table))
 
 		# close the cursor
 		cursor.close()
