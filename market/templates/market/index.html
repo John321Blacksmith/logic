@@ -1,70 +1,6 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>market</title>
-	<meta name='viewport' content='width=device-width', initial-scale=1>
-	<style>
-		.sidenav {
-			height: 100%;
-			width:250px;
-			position: fixed;
-			z-index: 1;
-			top: 0;
-			left: 0;
-			background-color: #111;
-			overflow-x: hidden;
-			transition: 0.5s;
-			padding-top: 60px;
-		}
-
-		.sidenav a {
-			padding: 8px 8px 8px 32px;
-			text-decoration: none;
-			font-size: 25px;
-			color: #818181;
-			display: block;
-			transition: 0.3s;
-		}
-
-		.sidenav a:hover {
-			color: #f1f1f1;
-		}
-
-		.sidenav .closebtn {
-			position: absolute;
-			top: 0;
-			right: 25px;
-			font-size: 36px;
-			margin-left: 50px;
-		}
-
-		@media only screen and (max-height: 450px) {
-			.sidenav {padding-top: 15px;}
-			.sidenav a {font-size: 18px;}
-		}
-
-	</style>
-</head> 
-<body>
-	<!-- <h2 id="title">Your Market</h2> -->
-	<header>
-		<div id="mySidenav" class="sidenav" style='display:block;'>
-			<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-			<a href="{% url 'market:food' %}">Food</a>
-			<a href="{% url 'market:kitchen' %}">Kitchen</a>
-			<a href="{% url 'market:el_equip' %}">Electrical Equipment</a>
-			<a href="{% url 'market:garden' %}">Garden</a>
-			<a href="{% url 'market:kids_stuff' %}">For Kids</a>
-			<a href="{% url 'market:tools' %}">Tools</a>
-			<a href="{% url 'market:fitness_stuff' %}">For Fitness</a>
-			<a href="{% url 'market:auto_moto' %}">Auto-Moto</a>
-			<a href="{% url 'market:beauty_health' %}">Beauty And Health</a>
-		</div>
-
-		<span onclick="openNav()" style="cursor:pointer">&#9776;</span>
-	</header>
-	<main>
-		<div class="row">
+{% extends 'market/base.html' %}
+{% block content %}
+<div class="row">
 		<!-- the iteration goes here -->
 		{% for product in products %}
 			<div class="card">
@@ -79,23 +15,6 @@
 			{% empty %}
 			<p>there are no any products yet
 		{% endfor %}		
-		</div>
-	</main>
+</div>
 
-	<script type="text/javascript">
-		function openNav() {
-			let sidebar;
-			sidebar = document.getElememtById("mySidenav");
-			sidebar.style.display = 'block';
-		}
-
-		function closeNav() {
-			let sidebar;
-			sidebar = document.getElementById("mySidenav");
-			sidebar.style.display = 'none';
-		}
-
-
-	</script>
-</body>
-</html>
+{% endblock content %}

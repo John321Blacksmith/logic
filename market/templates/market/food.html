@@ -1,12 +1,20 @@
-<!DOCTYPE html>
-<!DOCTYPE html>
-<html>
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title></title>
-</head>
-<body>
+{% extends 'market/base.html' %}
+{% block content %}
+<div class="row">
+		<!-- the iteration goes here -->
+		{% for product in products %}
+			<div class="card">
+				<a href={{ product.link }} class="product-access">
+					<img class="card-image" src={{ product.image }}>
+					<div class="card-content">
+						<h5>{{ product.title }}</h5>
+						<p>Price: {{ product.price }} RUB</p>
+					</div>
+				</a>
+			</div>
+			{% empty %}
+			<p>there are no any products yet
+		{% endfor %}		
+</div>
 
-</body>
-</html>
+{% endblock content %}

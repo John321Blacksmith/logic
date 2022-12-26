@@ -139,7 +139,7 @@ def update_data(conn, table, new_objects):
 	# updating query 
 	updating_query = """UPDATE {0}
 						SET product_name = '{1}',
-							product_price = '{2}',
+							product_price = {2},
 							product_link = '{3}',
 							product_image = '{4}'
 						WHERE product_id = {5};"""
@@ -175,8 +175,9 @@ def update_data(conn, table, new_objects):
 
 				# execute the updataing query to each existing row in the database table
 			cursor.execute(updating_query.format(table, obj['title'], obj['integer'], obj['link'], obj['image'], current_id))
-		# else:
-			# print(f'the table \'{table}\' has been uploaded.')
+		else:
+
+			print(f'the table \'{table}\' has been uploaded.')
 		# else:
 			# pass
 
