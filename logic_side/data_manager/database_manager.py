@@ -27,7 +27,7 @@ def connect_to_the_db(filename):
 		return connection
 
 
-def insert_data(conn, query, objects):
+def insert_data(conn, table, query, objects):
 
 	# create a cursor
 	cursor = conn.cursor()
@@ -39,10 +39,9 @@ def insert_data(conn, query, objects):
 			# extract the native object keys
 			keys = [key for key in obj.keys()]
 
-			# create a tuple of object values to be dumped
-			values = (obj[keys[0]], obj[keys[1]], obj[keys[2]], obj[keys[3]])
+			# create a tuple containing of a table name and object values to be dumped
 
-			cursor.execute(query, values)
+			cursor.execute(query.format(table, obj[keys[0]], obj[keys[1]], obj[keys[2]], obj[keys[3]]))
 
 		# shut down the cursor
 		cursor.close()

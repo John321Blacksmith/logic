@@ -38,6 +38,14 @@
 			margin-left: 50px;
 		}
 
+		.span .openbtn {
+			position: absolute;
+			top: 0;
+			right: 25px;
+			font-size: 36px;
+			margin-left: 50px;
+		}
+
 		@media only screen and (max-height: 450px) {
 			.sidenav {padding-top: 15px;}
 			.sidenav a {font-size: 18px;}
@@ -48,20 +56,23 @@
 <body>
 	<!-- <h2 id="title">Your Market</h2> -->
 	<header>
-		<div id="mySidenav" class="sidenav" style='display:block;'>
+		<div id="mySidenav" class="sidenav">
 			<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+
+			<a href="{% url 'market:index' %}">Home</a>
 			<a href="{% url 'market:food' %}">Food</a>
 			<a href="{% url 'market:kitchen' %}">Kitchen</a>
 			<a href="{% url 'market:el_equip' %}">Electrical Equipment</a>
 			<a href="{% url 'market:garden' %}">Garden</a>
 			<a href="{% url 'market:kids_stuff' %}">For Kids</a>
+			<a href="{% url 'market:kids_stuff' %}">Office</a>
 			<a href="{% url 'market:tools' %}">Tools</a>
 			<a href="{% url 'market:fitness_stuff' %}">For Fitness</a>
 			<a href="{% url 'market:auto_moto' %}">Auto-Moto</a>
 			<a href="{% url 'market:beauty_health' %}">Beauty And Health</a>
 		</div>
 
-		<span onclick="openNav()" style="cursor:pointer">&#9776;</span>
+		<span class="openbtn" onclick="openNav()" style="cursor:pointer">&#9776;</span>
 	</header>
 	<main>
 		{% block content %}{% endblock content %}
@@ -74,13 +85,13 @@
 		function openNav() {
 			let sidebar;
 			sidebar = document.getElememtById("mySidenav");
-			sidebar.style.display = 'block';
+			sidebar.style.width = "250px";
 		}
 
 		function closeNav() {
 			let sidebar;
 			sidebar = document.getElementById("mySidenav");
-			sidebar.style.display = 'none';
+			sidebar.style.width = '0px';
 		}
 
 

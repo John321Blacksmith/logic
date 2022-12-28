@@ -75,6 +75,10 @@ def get_tools(request):
 	context = retrieve_data_from_the_current_db('tools')
 	return render(request, 'market/tools.html', context)
 
+def get_office(request):
+	context = retrieve_data_from_the_current_db('computer_office')
+	return render(request, 'market/office.html', context)
+
 
 def get_fitness_stuff(request):
 	context = retrieve_data_from_the_current_db('for_fitness')
