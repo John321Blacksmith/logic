@@ -3,7 +3,22 @@
 # This module contains either scraping and data structuring functionality.
 
 import requests
+import json
 from bs4 import BeautifulSoup as Bs
+
+
+def decode_json_data(file):
+   """this function receives a json file and
+      deserializes it to the dict python object."""
+   
+   try:
+      with open(file, mode='r') as json_f:
+         data = json.load(json_f)
+   except (FileNotFoundError, json.JSONDecodeError) as error:
+      print(f'An Error occurred because of: \'{error}\'. ')
+   else:
+
+      return data
 
 
 class Soup(Bs):
@@ -118,24 +133,31 @@ class DataFetcher(Soup):
     	return total_number_of_pages
 
    @staticmethod
-   def refine_string(problematic_string: str, numbers_only=False):
+   def refine_string(item, problematic_string: str, site_dict: dict, numbers_only=False):
       """this method filters the string from the excessive space.
-      Returns digits or letters."""
+      Returns either digits or letters."""
       data = ''
-
       if numbers_only:
-         for letter in list(problematic_string):
-            if (letter.isdigit()) or (letter == ','):
-                data += letter
-         else:
-            if data.find(','):
-               decimal = data.replace(',', '.')
-               if decimal == '':
-                  result = 0
-               else:
-                  result = float(decimal)
+         if site_dict[item]['integer']['numeric']:
+            for letter in list(problematic_string):
+               if (letter.isdigit()) or (letter == ','):
+                   data += letter
             else:
-               result = int(data)
+               if data.find(','):
+                  decimal = data.replace(',', '.')
+                  if decimal == '':
+                     result = 0
+                  else:
+                     result = float(decimal)
+               else:
+                  result = int(data)
+         else:
+            for letter in list(problematic_string):
+               if (letter != '\n') and (letter != '\t'):
+                     data += letter
+            else:
+               result = data
+
       else:
          for letter in list(problematic_string):
             if (letter != '\n') and (letter != '\t'):
@@ -324,8 +346,8 @@ class DataFetcher(Soup):
       if item_key in site_dict[item]['obj_components']:
          obj_entity = content_dict[item_key][order_num]
          if item_key == 'titles':
-            obj_dict[item_key[:-1]] = DataFetcher.refine_string(obj_entity)
+            obj_dict[item_key[:-1]] = DataFetcher.refine_string(item, obj_entity, site_dict)
          if item_key == 'integers':
-            obj_dict[item_key[:-1]] = DataFetcher.refine_string(obj_entity, numbers_only=True)
+            obj_dict[item_key[:-1]] = DataFetcher.refine_string(item, obj_entity, site_dict, numbers_only=True)
          else:
             obj_dict[item_key[:-1]] = obj_entity
