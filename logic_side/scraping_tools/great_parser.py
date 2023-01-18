@@ -17,7 +17,7 @@ def decode_json_data(file):
    except (FileNotFoundError, json.JSONDecodeError) as error:
       print(f'An Error occurred because of: \'{error}\'. ')
    else:
-
+      
       return data
 
 
