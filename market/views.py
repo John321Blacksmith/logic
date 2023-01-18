@@ -10,7 +10,7 @@ from logic_side.data_manager import database_manager
 from logic_side.scraping_tools import great_parser 
 
 
-ali_express_confs = great_parser.decode_json_data('ali_express_market.json')
+ali_express_confs = great_parser.decode_json_data('market//ali_express_market.json')
 
 # Create your views here.
 

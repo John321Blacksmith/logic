@@ -17,7 +17,7 @@ def dump_data(market_confs: dict):
 
 	for table in tables[2:]:
 		connection = database_manager.connect_to_the_db(secrs.params_location)
-		content = great_parser.DataFecther.fetch_content(market_confs[table]['source'], table, market_confs)
+		content = great_parser.DataFetcher.fetch_content(market_confs[table]['source'], table, market_confs)
 		products = great_parser.DataFetcher.structure_data(table, market_confs, content)
 
 		database_manager.insert_data(connection, table, insertion_query, products)
