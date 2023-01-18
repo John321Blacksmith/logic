@@ -27,4 +27,5 @@ urlpatterns = [
 	path('auto-moto/', views.get_auto_and_moto, name='auto_moto'),
 	# the beauty and health page pattern
 	path('beauty-health/', views.get_beaut_and_health, name='beauty_health'),
+
 ]

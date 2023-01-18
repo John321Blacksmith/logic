@@ -61,7 +61,7 @@ def insert_data(conn, table, query, objects):
 
 def retrieve_data(conn, query, table):
 	"""This function fetches the data from the table and
-	returns a list of objectsto be rendered in the django template."""
+	returns a list of objects to be rendered in the django template."""
 
 	objs = []
 	try:

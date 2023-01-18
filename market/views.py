@@ -1,13 +1,13 @@
 import sys
 from . import secrs
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 sys.path.append(secrs.project_location)
 
 from logic_side.data_manager.config import config
 from logic_side.data_manager import database_manager
 from logic_side.scraping_tools.great_parser import DataFetcher
-from api import ali_express
+from . import data_dumper
 
 # Create your views here.
 
@@ -40,8 +40,13 @@ def index(request):
 	# there are the categories of either food and the other products at sidebars,
 	# and there are the newest or price-offed highlighted products gathered from different
 	# markets(sites) in the main site square.
+	if request.method != 'GET':
+		ali_express_confs = great_parser.decode_json_data('ali_express_market.json')
+		data_dumper.dump_data(ali_express_confs)
 
-	context = retrieve_data_from_the_current_db('highlights')
+		return redirect('market:index')
+	else:
+		context = retrieve_data_from_the_current_db('highlights')
 
 	return render(request, 'market/index.html', context)
 
