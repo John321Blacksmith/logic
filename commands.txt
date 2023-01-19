@@ -9,3 +9,6 @@ table_creation_query = """CREATE TABLE {} (
 
 insertion_query = """INSERT INTO {0}(product_name, product_price, product_link, product_image)
 						 VALUES('{1}','{2}','{3}','{4}');"""
+
+
+table_deletion_query = """TRUNCATE TABLE {};"""

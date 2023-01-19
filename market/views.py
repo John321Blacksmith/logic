@@ -48,8 +48,17 @@ def index(request):
 
 		return redirect('market:index')
 
-	else:
+	if request.method == 'GET':
 		context = retrieve_data_from_the_current_db('highlights')
+
+	if request.method == 'DELETE':
+		tables =[key for key in ali_express_confs.keys()]
+
+		delete_q = """TRUNCATE TABLE {};"""
+		connection = database_manager.connect_to_the_db(secrs.params_location)
+		database_manager.delete_data(connection, delete_q, tables[2:])
+
+		return redirect('market:index')
 
 	return render(request, 'market/index.html', context)
 

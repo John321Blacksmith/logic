@@ -77,8 +77,10 @@
 	<main>
 		<form action={% url "market:index" %} method="post">
 			{% csrf_token %}
-		<button type="submit">Update store</button>
+		<button type="submit" name="update" value="update">Update store</button>
+		<button type="submit" name="delete" value="delete">Refine store</button>
 		</form>
+
 		{% block content %}{% endblock content %}
 	</main>
 	<footer>

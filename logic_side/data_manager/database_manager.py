@@ -198,6 +198,24 @@ def update_data(conn, table, new_objects):
 			conn.close()
 
 
-def delete_data():
-	pass
+def delete_data(conn, query, tables):
+
+	for table in tables:
+		try:
+			cursor = conn.cursor()
+
+			cursor.execute(query.format(table))
+
+			cursor.close()
+
+			conn.commit()
+
+		except (Exception, psycopg2.DatabaseError) as error:
+			print(ERROR + str(error))
+
+		else:
+			if conn is not None:
+				conn.close()
+	else:
+		print("the tables have been cleaned")
 
