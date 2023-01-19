@@ -51,7 +51,7 @@ def index(request):
 	if request.method == 'GET':
 		context = retrieve_data_from_the_current_db('highlights')
 
-	if request.method == 'DELETE':
+	else:
 		tables =[key for key in ali_express_confs.keys()]
 
 		delete_q = """TRUNCATE TABLE {};"""
