@@ -7,7 +7,7 @@ sys.path.append(secrs.project_location)
 
 from logic_side.data_manager.config import config
 from logic_side.data_manager import database_manager
-from logic_side.scraping_tools import great_parser 
+from logic_side.scraping_tools import great_parser
 
 
 ali_express_confs = great_parser.decode_json_data('market//ali_express_market.json')

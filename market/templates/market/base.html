@@ -75,11 +75,8 @@
 		<span class="openbtn" onclick="openNav()" style="cursor:pointer">&#9776;</span>
 	</header>
 	<main>
-		<form action={% url "market:index" %} method="post">
-			{% csrf_token %}
-		<button type="submit" name="update" value="update">Update store</button>
-		<button type="submit" name="delete" value="delete">Refine store</button>
-		</form>
+		<button type="submit" onclick={% url "market:index" %} name="update" value="update">Update store</button>
+		<button type="submit" onclick={% url "market:index" %} name="delete" value="delete">Refine store</button>
 
 		{% block content %}{% endblock content %}
 	</main>
