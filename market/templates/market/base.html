@@ -2,84 +2,29 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>market</title>
+	<meta charset="utf-8">
 	<meta name='viewport' content='width=device-width initial-scale=1'>
-	<style>
-		.sidebar {
-			height: 100%;
-			width: 0px;
-			position: fixed;
-			z-index: 1;
-			top: 0;
-			left: 0;
-			background-color: #111;
-			overflow-x: hidden;
-			transition: 0.5s;
-			padding-top: 60px;
-		}
-
-		.sidebar a {
-			padding: 8px 8px 8px 32px;
-			text-decoration: none;
-			font-size: 25px;
-			color: #818181;
-			display: block;
-			transition: 0.3s;
-		}
-
-		.sidebar a:hover {
-			color: #f1f1f1;
-		}
-
-		.sidebar .closebtn {
-			position: absolute;
-			top: 0;
-			right: 25px;
-			font-size: 36px;
-			margin-left: 50px;
-		}
-
-		.openbtn {
-			position: absolute;
-			top: 0;
-			right: 25px;
-			font-size: 36px;
-			margin-left: 50px;
-			border: none;
-			padding: 10px 15px;
-		}
-
-		.openbtn:hover {
-			background-color: #444;
-		}
-
-		#content {
-			transition: margin-left .5s;
-			padding: 16px;
-		}
-
-		@media only screen and (max-height: 450px) {
-			.sidebar {padding-top: 15px;}
-			.sidebar a {font-size: 18px;}
-		}
-
-	</style>
-</head> 
+	<link rel="stylesheet" href="{% static 'market/menu.css' %}">
+	<title>market</title>
+	
+</head>
 <body>
-	<!-- <h2 id="title">Your Market</h2> -->
-	<div id="mySidebar" class="sidebar">
+
+	<div id="myNav" class="overlay">
 		<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-		<a href="{% url 'market:index' %}">Home</a>
-		<a href="{% url 'market:food' %}">Food</a>
-		<a href="{% url 'market:kitchen' %}">Kitchen</a>
-		<a href="{% url 'market:el_equip' %}">Electrical Equipment</a>
-		<a href="{% url 'market:garden' %}">Garden</a>
-		<a href="{% url 'market:kids_stuff' %}">For Kids</a>
-		<a href="{% url 'market:office' %}">Office</a>
-		<a href="{% url 'market:tools' %}">Tools</a>
-		<a href="{% url 'market:fitness_stuff' %}">For Fitness</a>
-		<a href="{% url 'market:auto_moto' %}">Auto-Moto</a>
-		<a href="{% url 'market:beauty_health' %}">Beauty And Health</a>
+		<div class="overlay-content">
+			<a href="{% url 'market:index' %}">Home</a>
+			<a href="{% url 'market:food' %}">Food</a>
+			<a href="{% url 'market:kitchen' %}">Kitchen</a>
+			<a href="{% url 'market:el_equip' %}">Electrical Equipment</a>
+			<a href="{% url 'market:garden' %}">Garden</a>
+			<a href="{% url 'market:kids_stuff' %}">For Kids</a>
+			<a href="{% url 'market:office' %}">Office</a>
+			<a href="{% url 'market:tools' %}">Tools</a>
+			<a href="{% url 'market:fitness_stuff' %}">For Fitness</a>
+			<a href="{% url 'market:auto_moto' %}">Auto-Moto</a>
+			<a href="{% url 'market:beauty_health' %}">Beauty And Health</a>
+		</div>
 	</div>
 
 	<div id="content">
