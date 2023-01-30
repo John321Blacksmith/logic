@@ -107,6 +107,6 @@ def get_auto_and_moto(request):
 	return render(request, 'market/auto_moto.html', context)
 
 
-def get_beaut_and_health(request):
+def get_beauty_and_health(request):
 	context = retrieve_data_from_the_current_db('beauty_health')
 	return render(request, 'market/beauty_health.html', context)

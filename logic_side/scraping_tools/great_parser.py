@@ -12,7 +12,7 @@ def decode_json_data(file):
       deserializes it to the dict python object."""
    
    try:
-      with open(file, mode='r') as json_f:
+      with open(file, mode='r', encoding='utf-8') as json_f:
          data = json.load(json_f)
    except (FileNotFoundError, json.JSONDecodeError) as error:
       print(f'An Error occurred because of: \'{error}\'. ')
