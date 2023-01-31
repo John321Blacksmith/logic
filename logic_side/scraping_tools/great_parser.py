@@ -48,7 +48,7 @@ class Soup(Bs):
 
 
 class SortData:
-   """The sorting algorithm finds either a lowest or a greatest value in the list."""
+   """The sorting algorithm finds a lowest value in the list."""
 
    def __init__(self, seq):
       self.seq = seq
@@ -62,6 +62,62 @@ class SortData:
             lowest = self.seq[i]
       else:
          return lowest
+
+
+class SeqManager:
+   """This class has some functionality to narrow
+      the strings and other DSs down."""
+
+   @staticmethod
+   def refine_string(item, problematic_string: str, site_dict: dict, numbers_only=False):
+      """this method filters the string from the excessive space.
+         Returns either digits or letters."""
+      data = ''
+      if numbers_only:
+         if site_dict[item]['integer']['numeric']:
+            for letter in list(problematic_string):
+               if (letter.isdigit()) or (letter == ','):
+                   data += letter
+            else:
+               if data.find(','):
+                  decimal = data.replace(',', '.')
+                  if decimal == '':
+                     result = 0
+                  else:
+                     result = float(decimal)
+               else:
+                  result = int(data)
+         else:
+            for letter in list(problematic_string):
+               if (letter != '\n') and (letter != '\t'):
+                     data += letter
+            else:
+               result = data
+
+      else:
+         for letter in list(problematic_string):
+            if (letter != '\n') and (letter != '\t'):
+                  data += letter
+         else:
+            result = data
+
+      return result
+
+   @staticmethod
+   def inspect_signs(sign: str, seq: str, sign_num: int):
+      """This method gets a sign to search and the row of data to
+         be inspected and iterates then through the row
+         and finds the issued sign inside one and
+         returns its position."""
+      count = 0
+      for i in range(0, len(seq)):
+         if seq[i] == sign:
+            count += 1
+            if count == sign_num:
+               return i
+            else:
+               continue
+
 
 
 # data scraping from the target page
@@ -122,55 +178,7 @@ class DataFetcher(Soup):
     	
     	return total_number_of_pages
 
-   @staticmethod
-   def refine_string(item, problematic_string: str, site_dict: dict, numbers_only=False):
-      """this method filters the string from the excessive space.
-      Returns either digits or letters."""
-      data = ''
-      if numbers_only:
-         if site_dict[item]['integer']['numeric']:
-            for letter in list(problematic_string):
-               if (letter.isdigit()) or (letter == ','):
-                   data += letter
-            else:
-               if data.find(','):
-                  decimal = data.replace(',', '.')
-                  if decimal == '':
-                     result = 0
-                  else:
-                     result = float(decimal)
-               else:
-                  result = int(data)
-         else:
-            for letter in list(problematic_string):
-               if (letter != '\n') and (letter != '\t'):
-                     data += letter
-            else:
-               result = data
-
-      else:
-         for letter in list(problematic_string):
-            if (letter != '\n') and (letter != '\t'):
-                  data += letter
-         else:
-            result = data
-
-      return result
-
-   @staticmethod
-   def inspect_signs(sign: str, seq: str, sign_num: int):
-      """This method gets a sign to search and the row of data to
-         be inspected and iterates then through the row
-         and finds the issued sign inside one and
-         returns its position."""
-      count = 0
-      for i in range(0, len(seq)):
-         if seq[i] == sign:
-            count += 1
-            if count == sign_num:
-               return i
-            else:
-               continue
+   
 
    @staticmethod
    def fetch_content(source, item, site_dict: dict, loc_file=False):
@@ -178,7 +186,7 @@ class DataFetcher(Soup):
          contains four universal keys that have lists as their values.
          The dictionary keys: 'titles', 'integers', 'links', 'images'.
          Every key of this dictionary is related to all the data gathered from the
-       page for the data the dict key represents."""
+         page for the data the dict key represents."""
 
       # a dictionary with the web data to be further structured
       content = {'titles': [], 'integers': [], 'links': [], 'images': []}
