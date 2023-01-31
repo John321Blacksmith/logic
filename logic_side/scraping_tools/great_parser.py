@@ -119,7 +119,6 @@ class SeqManager:
                continue
 
 
-
 # data scraping from the target page
 class DataFetcher(Soup):
    """This class creates either an object contains unstructured web-page
@@ -177,8 +176,6 @@ class DataFetcher(Soup):
     	total_number_of_pages = total_objs_quantity // objs_quantity_per_page
     	
     	return total_number_of_pages
-
-   
 
    @staticmethod
    def fetch_content(source, item, site_dict: dict, loc_file=False):
@@ -259,7 +256,7 @@ class DataFetcher(Soup):
             # if it is not, a root link is cut off from the main source of the item
             else:
                # fetching an end point of the sliced string
-               third_slash = DataFetcher.inspect_signs('/', source, 3)
+               third_slash = SeqManager.inspect_signs('/', source, 3)
                # then the main source string slice, an additional slash and the uncomplete href are substracted
                link = source[:third_slash] + '/' + snippet[1:]
             
@@ -281,11 +278,11 @@ class DataFetcher(Soup):
                         image_link = i[attr]
                      else:
                         if i[attr].startswith('//'):
-                           first_slash = DataFetcher.inspect_signs('/',
+                           first_slash = SeqManager.inspect_signs('/',
                               source, 1)
                            image_link = source[:first_slash] + '/' + i[attr][1:]
                         else:
-                           third_slash = DataFetcher.inspect_signs('/',
+                           third_slash = SeqManager.inspect_signs('/',
                               source, 3)
                            image_link = source[:third_slash] + '/' + i[attr][1:]
 
@@ -344,8 +341,8 @@ class DataFetcher(Soup):
       if item_key in site_dict[item]['obj_components']:
          obj_entity = content_dict[item_key][order_num]
          if item_key == 'titles':
-            obj_dict[item_key[:-1]] = DataFetcher.refine_string(item, obj_entity, site_dict)
+            obj_dict[item_key[:-1]] = SeqManager.refine_string(item, obj_entity, site_dict)
          if item_key == 'integers':
-            obj_dict[item_key[:-1]] = DataFetcher.refine_string(item, obj_entity, site_dict, numbers_only=True)
+            obj_dict[item_key[:-1]] = SeqManager.refine_string(item, obj_entity, site_dict, numbers_only=True)
          else:
             obj_dict[item_key[:-1]] = obj_entity
