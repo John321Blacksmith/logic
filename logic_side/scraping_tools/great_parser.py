@@ -106,7 +106,7 @@ class SeqManager:
 
 
 # data scraping from the target page
-class DataFetcher(Soup):
+class DataFetcher(Bs, SeqManager):
    """
    This blueprint represents all functionality to get either local or web data, 
    interpreting it as a soup and fetching some information for further structuring.
@@ -145,7 +145,7 @@ class DataFetcher(Soup):
       if loc_file:
       	soup = DataFetcher.get_soup(source, loc_file=True)
       if not loc_file:
-      	soup = Soup.get_soup(source)
+      	soup = DataFetcher.get_soup(source)
 
       all_categories = soup.find_all(site_dict[item]['cats_links']['tag'],
                                      site_dict[item]['cats_links']['class'])
@@ -203,10 +203,10 @@ class DataFetcher(Soup):
 
       # find all the individual objects on the page and get a list of them
       if loc_file:
-         soup = Soup.get_soup(source, loc_file=True)
+         soup = DataFetcher.get_soup(source, loc_file=True)
 
       if not loc_file:
-         soup = Soup.get_soup(source)
+         soup = DataFetcher.get_soup(source)
 
       objects = soup.find_all(site_dict[item]['object']['tag'],
                               site_dict[item]['object']['class'])
@@ -269,7 +269,7 @@ class DataFetcher(Soup):
             # if it is not, a root link is cut off from the main source of the item
             else:
                # fetching an end point of the sliced string
-               third_slash = SeqManager.inspect_signs('/', source, 3)
+               third_slash = DataFetcher.inspect_signs('/', source, 3)
                # then the main source string slice, an additional slash and the uncomplete href are substracted
                link = source[:third_slash] + '/' + snippet[1:]
             
@@ -291,11 +291,11 @@ class DataFetcher(Soup):
                         image_link = i[attr]
                      else:
                         if i[attr].startswith('//'):
-                           first_slash = SeqManager.inspect_signs('/',
+                           first_slash = DataFetcher.inspect_signs('/',
                               source, 1)
                            image_link = source[:first_slash] + '/' + i[attr][1:]
                         else:
-                           third_slash = SeqManager.inspect_signs('/',
+                           third_slash = DataFetcher.inspect_signs('/',
                               source, 3)
                            image_link = source[:third_slash] + '/' + i[attr][1:]
 
@@ -356,8 +356,8 @@ class DataFetcher(Soup):
       if item_key in site_dict[item]['obj_components']:
          obj_entity = content_dict[item_key][order_num]
          if item_key == 'titles':
-            obj_dict[item_key[:-1]] = SeqManager.refine_string(item, obj_entity, site_dict)
+            obj_dict[item_key[:-1]] = DataFetcher.refine_string(item, obj_entity, site_dict)
          if item_key == 'integers':
-            obj_dict[item_key[:-1]] = SeqManager.refine_string(item, obj_entity, site_dict, numbers_only=True)
+            obj_dict[item_key[:-1]] = DataFetcher.refine_string(item, obj_entity, site_dict, numbers_only=True)
          else:
             obj_dict[item_key[:-1]] = obj_entity
