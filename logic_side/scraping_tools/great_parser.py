@@ -332,32 +332,41 @@ class DataFetcher(Bs, SeqManager):
          ob = SortData(quantities)
          actual_num = ob.find_smallest()
          for i in range(0, actual_num):
-            # every object is constructed as a dictionary
-            obj = {}
-
-            for key in keys:
-               DataFetcher.check_components(i, item, key, site_dict, content_dict, obj)
+            # get an object dictionary to be appended to the list
+            
+            obj_dict = DataFetcher.complete_object(i, item, keys, site_dict, content_dict)
 
             # when the object dict is constructed, it is moved to the list of objects
-            list_of_objects.append(obj)
+            list_of_objects.append(obj_dict)
 
       return list_of_objects
 
    @staticmethod
-   def check_components(order_num,
-                        item,
-                        item_key: str,
-                        site_dict: dict,
-                        content_dict: dict,
-                        obj_dict: dict):
-    # before every item of object is included to the object, there is a check
-    # if a required key is in the item list of components
+   def complete_object(order_num,
+                       item,
+                       list_of_keys: list,
+                       site_dict: dict,
+                       content_dict: dict,
+                       ):
 
-      if item_key in site_dict[item]['obj_components']:
-         obj_entity = content_dict[item_key][order_num]
-         if item_key == 'titles':
-            obj_dict[item_key[:-1]] = DataFetcher.refine_string(item, obj_entity, site_dict)
-         if item_key == 'integers':
-            obj_dict[item_key[:-1]] = DataFetcher.refine_string(item, obj_entity, site_dict, numbers_only=True)
-         else:
-            obj_dict[item_key[:-1]] = obj_entity
+      """
+      This method uses a list of content keys and a positional
+      number of each element and picks up each element. It also receives both
+      unstructured and site dictionary. It then iterates through the content 
+      keys checking api components requirements and returns a structured object.
+      """
+      # define an object
+      obj = {}
+      for key in list_of_keys:
+      # before every item of object is included to the object, there is a check
+      # if a required key is in the item list of components
+         if key in site_dict[item]['obj_components']:
+            obj_entity = content_dict[key][order_num]
+            if key == 'titles':
+               obj[key[:-1]] = DataFetcher.refine_string(item, obj_entity, site_dict)
+            if key == 'integers':
+               obj[key[:-1]] = DataFetcher.refine_string(item, obj_entity, site_dict, numbers_only=True)
+            else:
+               obj[key[:-1]] = obj_entity
+
+      return obj
