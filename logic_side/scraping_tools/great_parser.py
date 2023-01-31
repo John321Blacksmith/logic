@@ -8,8 +8,10 @@ from bs4 import BeautifulSoup as Bs
 
 
 def decode_json_data(file):
-   """this function receives a json file and
-      deserializes it to the dict python object."""
+   """
+   This function receives a json file and
+   deserializes it to the dict python object.
+   """
    
    try:
       with open(file, mode='r', encoding='utf-8') as json_f:
@@ -21,40 +23,18 @@ def decode_json_data(file):
       return data
 
 
-class Soup(Bs):
-   """Create a soup object."""
-
-   def __init__(self):
-      super().__init__()
-
-   @staticmethod
-   def get_soup(source, loc_file=False):
-      """Returning a soup."""
-
-      my_headers = {
-         'User-Agent':
-         'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/15.5 Safari/605.1.15'
-      }
-
-      if loc_file:
-         with open(source, mode='r', encoding='utf-8') as page:
-            soup = Bs(page, 'html.parser')
-
-      if not loc_file:
-         page = requests.get(source, headers=my_headers).text
-         soup = Bs(page, 'html.parser')
-
-      return soup
-
-
 class SortData:
-   """The sorting algorithm finds a lowest value in the list."""
+   """
+   The sorting algorithm finds a lowest value in the list.
+   """
 
    def __init__(self, seq):
       self.seq = seq
 
    def find_smallest(self):
-      """This method returns a lowest value."""
+      """
+      This method returns a lowest value.
+      """
       lowest = self.seq[0]
 
       for i in range(0, len(self.seq)):
@@ -65,13 +45,17 @@ class SortData:
 
 
 class SeqManager:
-   """This class has some functionality to narrow
-      the strings and other DSs down."""
+   """
+   This class has some functionality to narrow
+   the strings and other DSs down.
+   """
 
    @staticmethod
    def refine_string(item, problematic_string: str, site_dict: dict, numbers_only=False):
-      """this method filters the string from the excessive space.
-         Returns either digits or letters."""
+      """
+      This method filters the string from the excessive space.
+      Returns either digits or letters.
+      """
       data = ''
       if numbers_only:
          if site_dict[item]['integer']['numeric']:
@@ -105,10 +89,12 @@ class SeqManager:
 
    @staticmethod
    def inspect_signs(sign: str, seq: str, sign_num: int):
-      """This method gets a sign to search and the row of data to
-         be inspected and iterates then through the row
-         and finds the issued sign inside one and
-         returns its position."""
+      """
+      This method gets a sign to search and the row of data to
+      be inspected and iterates then through the row
+      and finds the issued sign inside one and
+      returns its position.
+      """
       count = 0
       for i in range(0, len(seq)):
          if seq[i] == sign:
@@ -121,17 +107,40 @@ class SeqManager:
 
 # data scraping from the target page
 class DataFetcher(Soup):
-   """This class creates either an object contains unstructured web-page
-     data and the one represents a structured list of objects."""
+   """
+   This blueprint represents all functionality to get either local or web data, 
+   interpreting it as a soup and fetching some information for further structuring.
+   """
 
    def __init__(self):
       super().__init__()
 
    @staticmethod
+   def get_soup(source, loc_file=False):
+      """Returning a soup."""
+
+      my_headers = {
+         'User-Agent':
+         'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/15.5 Safari/605.1.15'
+      }
+
+      if loc_file:
+         with open(source, mode='r', encoding='utf-8') as page:
+            soup = Bs(page, 'html.parser')
+
+      if not loc_file:
+         page = requests.get(source, headers=my_headers).text
+         soup = Bs(page, 'html.parser')
+
+      return soup
+
+   @staticmethod
    def get_each_page(source, item, site_dict: dict, loc_file=False):
-      """A method gets from the categories' page a link from each
-        category in order to perform then the same operation
-        as I have done before recursively."""
+      """
+      A method gets from the categories' page a link from each
+      category in order to perform then the same operation
+      as I have done before recursively.
+      """
         
       if loc_file:
       	soup = DataFetcher.get_soup(source, loc_file=True)
@@ -156,9 +165,11 @@ class DataFetcher(Soup):
    								  item,
    								  site_dict: dict,
    								  loc_file=False):
-    	"""This method finds out how many objects there are in the
-    	 current category in total. Then it returns an actual number
-    	 of pages to be in the category."""
+    	"""
+      This method finds out how many objects there are in the
+    	current category in total. Then it returns an actual number
+    	of pages to be in the category.
+      """
     	
     	if loc_file:
     		soup = DataFetcher.get_soup(source, loc_file=True)
@@ -179,11 +190,13 @@ class DataFetcher(Soup):
 
    @staticmethod
    def fetch_content(source, item, site_dict: dict, loc_file=False):
-      """This method creates an object represents a dictionary which
-         contains four universal keys that have lists as their values.
-         The dictionary keys: 'titles', 'integers', 'links', 'images'.
-         Every key of this dictionary is related to all the data gathered from the
-         page for the data the dict key represents."""
+      """
+      This method creates an object represents a dictionary which
+      contains four universal keys that have lists as their values.
+      The dictionary keys: 'titles', 'integers', 'links', 'images'.
+      Every key of this dictionary is related to all the data gathered from the
+      page for the data the dict key represents.
+      """
 
       # a dictionary with the web data to be further structured
       content = {'titles': [], 'integers': [], 'links': [], 'images': []}
@@ -294,9 +307,11 @@ class DataFetcher(Soup):
 
    @staticmethod
    def structure_data(item, site_dict: dict, content_dict: dict):
-      """This method takes an item key string, an api dictionary
-        and a content dictionary with unsctructured data, and it then
-         returns a structured list with objects."""
+      """
+      This method takes an item key string, an api dictionary
+      and a content dictionary with unsctructured data, and it then
+      returns a structured list with objects.
+      """
 
       # a list of structured objects assembled along
       list_of_objects = []
