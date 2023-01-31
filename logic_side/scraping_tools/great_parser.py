@@ -63,16 +63,6 @@ class SortData:
       else:
          return lowest
 
-   def find_greatest(self):
-      """This method returns a greatest value."""
-      greatest = self.seq[0]
-
-      for i in range(0, len(self.seq)):
-         if self.seq[i] >= greatest:
-            greatest = self.seq[i]
-      else:
-         return greatest
-
 
 # data scraping from the target page
 class DataFetcher(Soup):
