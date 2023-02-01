@@ -60,6 +60,7 @@ class SeqManager:
       if numbers_only:
          try:
             if site_dict[item]['integer']['numeric']:
+
                for letter in list(problematic_string):
                   if (letter.isdigit()) or (letter == ','):
                       data += letter
@@ -79,7 +80,7 @@ class SeqManager:
                else:
                   result = data
          except (Exception, KeyError) as error:
-            print(f'Please, try to fix the following error: \'{error}\'.')
+            result = None
 
       else:
          for letter in list(problematic_string):
