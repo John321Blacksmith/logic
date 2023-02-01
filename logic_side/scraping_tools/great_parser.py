@@ -58,25 +58,28 @@ class SeqManager:
       """
       data = ''
       if numbers_only:
-         if site_dict[item]['integer']['numeric']:
-            for letter in list(problematic_string):
-               if (letter.isdigit()) or (letter == ','):
-                   data += letter
-            else:
-               if data.find(','):
-                  decimal = data.replace(',', '.')
-                  if decimal == '':
-                     result = 0
-                  else:
-                     result = float(decimal)
+         try:
+            if site_dict[item]['integer']['numeric']:
+               for letter in list(problematic_string):
+                  if (letter.isdigit()) or (letter == ','):
+                      data += letter
                else:
-                  result = int(data)
-         else:
-            for letter in list(problematic_string):
-               if (letter != '\n') and (letter != '\t'):
-                     data += letter
+                  if data.find(','):
+                     decimal = data.replace(',', '.')
+                     if decimal == '':
+                        result = 0
+                     else:
+                        result = float(decimal)
+                  else:
+                     result = int(data)
             else:
-               result = data
+               for letter in list(problematic_string):
+                  if (letter != '\n') and (letter != '\t'):
+                        data += letter
+               else:
+                  result = data
+         except (Exception, KeyError) as error:
+            print(f'Please, try to fix the following error: \'{error}\'.')
 
       else:
          for letter in list(problematic_string):
