@@ -15,9 +15,11 @@ ali_express_confs = great_parser.decode_json_data('market//ali_express_market.js
 # Create your views here.
 
 def retrieve_data_from_the_current_db(database_name):
-	"""This function does fetch data from different
-	   databases via performing the same commands. It 
-	   then returns a context to be rendered on the html page."""
+	"""
+	This function does fetchig data from different
+	databases via performing the same commands. It 
+	then returns a context to be rendered on the html page.
+	"""
 
 	# a selection query command
 	selection_query = """SELECT {0}, {1}, {2}, {3} FROM {4};"""
@@ -36,77 +38,74 @@ def retrieve_data_from_the_current_db(database_name):
 	return context
 
 
+def get_just_scraped_data(category):
+	"""
+	This function does extraction of the actual web data from the webpage.
+	It then returns a template context.
+	"""
+
+	web_p_content = great_parser.DataFetcher.fetch_content(ali_express_confs[category]['source'], category, ali_express_confs)
+	objects = great_parser.DataFetcher.structure_data(category, ali_express_confs, web_p_content)
+
+	context = {
+		'products': objects
+	}
+
+	return context
+
+
 def index(request):
-	"""This function renders a main page of the market."""
-
-	# this page contains the top-most goods classified to the categories
-	# there are the categories of either food and the other products at sidebars,
-	# and there are the newest or price-offed highlighted products gathered from different
-	# markets(sites) in the main site square.
-	if request.method == 'POST':
-		data_dumper.dump_data(ali_express_confs)
-
-		return redirect('market:index')
-
-	if request.method == 'GET':
-		context = retrieve_data_from_the_current_db('highlights')
-
-	else:
-		tables =[key for key in ali_express_confs.keys()]
-
-		delete_q = """TRUNCATE TABLE {};"""
-		connection = database_manager.connect_to_the_db(secrs.params_location)
-		database_manager.delete_data(connection, delete_q, tables[2:])
-
-		return redirect('market:index')
-
+	"""
+	This function renders a main page of the market.
+	"""
+	context = get_just_scraped_data('highlights')
 	return render(request, 'market/index.html', context)
 
 
 def get_food(request):
-	context = retrieve_data_from_the_current_db('food')
+	context = get_just_scraped_data('food')
 	return render(request, 'market/food.html', context)
 
 
 def get_kitchen(request):
-	context = retrieve_data_from_the_current_db('kitchen')
+	context = get_just_scraped_data('kitchen')
 	return render(request, 'market/kitchen.html', context)
 
 
 def get_electrical_equipment(request):
-	context = retrieve_data_from_the_current_db('electr_equipment')
+	context = get_just_scraped_data('electr_equipment')
 	return render(request, 'market/electr_eqnt.html', context)
 
 
 def get_garden(request):
-	context = retrieve_data_from_the_current_db('home_garden')
+	context = get_just_scraped_data('home_garden')
 	return render(request, 'market/get_garden.html', context)
 
 
 def get_kids_stuff(request):
-	context = retrieve_data_from_the_current_db('for_kids')
+	context = get_just_scraped_data('for_kids')
 	return render(request, 'market/kids_stuff.html', context)
 
 
 def get_tools(request):
-	context = retrieve_data_from_the_current_db('tools')
+	context = get_just_scraped_data('tools')
 	return render(request, 'market/tools.html', context)
 
 def get_office(request):
-	context = retrieve_data_from_the_current_db('computer_office')
+	context = get_just_scraped_data('computer_office')
 	return render(request, 'market/office.html', context)
 
 
 def get_fitness_stuff(request):
-	context = retrieve_data_from_the_current_db('for_fitness')
+	context = get_just_scraped_data('for_fitness')
 	return render(request, 'market/fitness_stuff.html', context)
 
 
 def get_auto_and_moto(request):
-	context = retrieve_data_from_the_current_db('auto_moto')
+	context = get_just_scraped_data('auto_moto')
 	return render(request, 'market/auto_moto.html', context)
 
 
 def get_beauty_and_health(request):
-	context = retrieve_data_from_the_current_db('beauty_health')
+	context = get_just_scraped_data('beauty_health')
 	return render(request, 'market/beauty_health.html', context)

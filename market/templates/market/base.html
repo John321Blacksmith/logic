@@ -27,14 +27,12 @@
 		</div>
 	</div>
 
-	<div id="content">
-		<button class="openbtn" onclick="openNav()">&#9776;</button>
-		<button type="submit" onclick="{% url 'market:index' %}" name="update" value="update">Update store</button>
-		<button type="submit" onclick="{% url 'market:index' %}" name="delete" value="delete">Refine store</button>
-
+	
+	<button class="openbtn" onclick="openNav()">&#9776;</button>
+	<div>
 		{% block content %}{% endblock content %}
 	</div>
-
+	
 	<script type="text/javascript" src="{% static 'market/simple_logic.js' %}"></script>
 
 </body>
