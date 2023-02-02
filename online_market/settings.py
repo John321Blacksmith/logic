@@ -17,7 +17,7 @@ from . import secrs
 sys.path.append(secrs.project_location)
 
 
-from logic_side.data_manager.config import config
+from logic_side.credentials.config import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent

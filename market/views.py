@@ -1,41 +1,16 @@
 import sys
 from django.shortcuts import render, redirect
 from . import secrs
-from . import data_dumper
 
 sys.path.append(secrs.project_location)
 
-from logic_side.data_manager.config import config
-from logic_side.data_manager import database_manager
+from logic_side.credentials.config import config
 from logic_side.scraping_tools import great_parser
 
 
 ali_express_confs = great_parser.decode_json_data('market//ali_express_market.json')
 
 # Create your views here.
-
-def retrieve_data_from_the_current_db(database_name):
-	"""
-	This function does fetchig data from different
-	databases via performing the same commands. It 
-	then returns a context to be rendered on the html page.
-	"""
-
-	# a selection query command
-	selection_query = """SELECT {0}, {1}, {2}, {3} FROM {4};"""
-
-	# create a connection object
-	connection = database_manager.connect_to_the_db(secrs.params_location)
-
-	# then extract the objects from a particular database
-	objects = database_manager.retrieve_data(connection, selection_query, database_name)
-
-	# form and return a context
-	context = {
-		'products': objects
-	}
-
-	return context
 
 
 def get_just_scraped_data(category):
