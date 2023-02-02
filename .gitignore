@@ -8,4 +8,5 @@ logic_side/scraping_tools/__pycache__/
 logic_side/credentials/my_database.ini
 online_market/secrs.py
 market/secrs.py
+market/migrations/
 *.json
