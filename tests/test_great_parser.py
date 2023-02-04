@@ -13,8 +13,19 @@ class TestGreatParser(unittest.TestCase):
 
 	def setUp(self):
 		"""Define some constants."""
-		pass
+		self.decimal_number = '64,7432'
+		self.even_number = '64'
+		self.inconsistent_sentence = 'hello \nworld'
+		self.confs = great_parser.decode_json_data('test_market_confs.json')
 
 	def test_refine_string(self):
 		"""Check if the refine_string method works well."""
-		pass
+		decimal_output = great_parser.DataFetcher.refine_string('food', self.decimal_number, self.confs, numbers_only=True)
+		literal_output = great_parser.DataFetcher.refine_string('food', self.inconsistent_sentence, self.confs)
+		
+		self.assertEqual(decimal_output, '64.7432')
+		self.assertEqual(literal_output, 'hello world')
+
+
+if __name__ == '__main__':
+	unittest.main()
