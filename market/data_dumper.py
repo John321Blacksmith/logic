@@ -6,11 +6,14 @@ The program fetches the data from the web and sends it to the database via impor
 import os
 import sys
 from django import setup
-# define the settings applied for this program
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'online_market.settings')
-setup()
 import secrs
 sys.path.append(secrs.project_location)
+from online_market import settings
+
+# define the settings applied for this program
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', settings.__name__)
+setup()
+
 from logic_side.scraping_tools import great_parser
 from models import (
 				Food,
@@ -26,7 +29,7 @@ from models import (
 
 
 # get a market dictionary
-m_dictionary = great_parser.decode_json_data('market//ali_express_market.json')
+m_dictionary = great_parser.decode_json_data('ali_express_market.json')
 
 # create a hash table with models associations
 market_tables = {
@@ -60,6 +63,7 @@ def dump_data(table_associations: dict, market_confs: dict):
 		# iterate through all the objects and make database records
 		for obj in objects:
 
+			# define values
 			product_name = obj['title']
 			product_price = obj['integer']
 			product_link = obj['link']
