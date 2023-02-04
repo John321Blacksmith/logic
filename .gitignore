@@ -9,4 +9,6 @@ logic_side/credentials/my_database.ini
 online_market/secrs.py
 market/secrs.py
 market/migrations/
+tests/secrs.py
 *.json
+*.txt
