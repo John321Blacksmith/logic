@@ -17,6 +17,7 @@ class TestGreatParser(unittest.TestCase):
 		self.even_number = '64'
 		self.inconsistent_sentence = 'hello \nworld'
 		self.confs = great_parser.decode_json_data('test_market_confs.json')
+		self.soup = great_parser.DataFetcher.get_soup('markdown.txt', loc_file=True)
 
 	def test_refine_string(self):
 		"""Check if the refine_string method works well."""
@@ -25,6 +26,14 @@ class TestGreatParser(unittest.TestCase):
 		
 		self.assertEqual(decimal_output, '64.7432')
 		self.assertEqual(literal_output, 'hello world')
+
+	def test_fetch_content(self):
+		"""This method tests the work of the fetch_content method."""
+		pass
+
+	def test_structure_data(self):
+		"""This method tests the work of the structure_data method."""
+		pass
 
 
 if __name__ == '__main__':
