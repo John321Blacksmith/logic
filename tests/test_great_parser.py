@@ -13,19 +13,30 @@ class TestGreatParser(unittest.TestCase):
 
 	def setUp(self):
 		"""Define some constants."""
-		self.decimal_number = '64,7432'
-		self.even_number = '64'
-		self.inconsistent_sentence = 'hello \nworld'
-		self.confs = great_parser.decode_json_data('test_market_confs.json')
-		self.soup = great_parser.DataFetcher.get_soup('markdown.txt', loc_file=True)
+		# define an example issue
+		self.improper_string = 'he3\nl4l  /^#;,\to/]w!o;r{l5d'
+
+		# define the results suppossed to be
+		self.decimal_number = 34.5
+		self.sentence = 'hello world'
+
+		# get a .json confs file
+		self.m_confs = great_parser.decode_json_data('test_market_confs.json')
 
 	def test_refine_string(self):
 		"""Check if the refine_string method works well."""
-		decimal_output = great_parser.DataFetcher.refine_string('food', self.decimal_number, self.confs, numbers_only=True)
-		literal_output = great_parser.DataFetcher.refine_string('food', self.inconsistent_sentence, self.confs)
+
+		# trying to get a proper number that'll satisfy the example above
+		proper_num = great_parser.DataFetcher.refine_string('food', self.improper_string, self.m_confs, numbers_only=True)
 		
-		self.assertEqual(decimal_output, '64.7432')
-		self.assertEqual(literal_output, 'hello world')
+		# trying to get a proper sentence that'll satisfy the example above
+		proper_sentence = great_parser.DataFetcher.refine_string('food', self.improper_string, self.m_confs, lang='en')
+
+		# checking if anything is all right with the number
+		self.assertEqual(self.decimal_number, proper_num)
+		
+		# checking if anything is all right with the number
+		self.assertEqual(self.sentence, proper_sentence)
 
 	def test_fetch_content(self):
 		"""This method tests the work of the fetch_content method."""

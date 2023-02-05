@@ -51,7 +51,7 @@ class SeqManager:
    """
 
    @staticmethod
-   def refine_string(item, problematic_string: str, site_dict: dict, numbers_only=False):
+   def refine_string(item, problematic_string: str, site_dict: dict, lang=None, numbers_only=False):
       """
       This method filters the string from the excessive space.
       Returns either digits or letters.
@@ -84,9 +84,18 @@ class SeqManager:
 
       else:
          for letter in list(problematic_string):
-            if (letter != '\n') and (letter != '\t'):
+            if lang == 'ru':
+               if letter in site_dict['ru-letters']:
+                  data += letter
+
+            elif lang == 'en':
+               if letter in site_dict['eng-letters']:
                   data += letter
          else:
+            if '' in data:
+               if data.count('') >= 2:
+                  data = data.replace('  ', ' ')
+
             result = data
 
       return result
@@ -359,6 +368,8 @@ class DataFetcher(Bs, SeqManager):
       unstructured and site dictionary. It then iterates through the content 
       keys checking api components requirements and returns a structured object.
       """
+      # define a content language
+      cont_language = site_dict['content_language']
       # define an object
       obj = {}
       for key in list_of_keys:
@@ -367,7 +378,7 @@ class DataFetcher(Bs, SeqManager):
          if key in site_dict[item]['obj_components']:
             obj_entity = content_dict[key][order_num]
             if key == 'titles':
-               obj[key[:-1]] = DataFetcher.refine_string(item, obj_entity, site_dict)
+               obj[key[:-1]] = DataFetcher.refine_string(item, obj_entity, site_dict, lang=cont_language)
             if key == 'integers':
                obj[key[:-1]] = DataFetcher.refine_string(item, obj_entity, site_dict, numbers_only=True)
             else:
