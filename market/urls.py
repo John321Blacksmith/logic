@@ -20,7 +20,7 @@ urlpatterns = [
 	# the tools page pattern
 	path('tools/', views.get_tools, name='tools'),
 	# the office page pattern
-	path('tools/', views.get_office, name='office'),
+	path('office/', views.get_office, name='office'),
 	# the fitness page pattern
 	path('fitness/', views.get_fitness_stuff, name='fitness_stuff'),
 	# the auto and moto page pattern

@@ -34,7 +34,7 @@ def index(request):
 	This function renders a main page of the market.
 	"""
 	context = get_just_scraped_data('highlights')
-	return render(request, 'market/test.html', context)
+	return render(request, 'market/index.html', context)
 
 
 def get_food(request):
