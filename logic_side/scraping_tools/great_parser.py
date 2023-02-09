@@ -85,11 +85,11 @@ class SeqManager:
       else:
          for letter in list(problematic_string):
             if lang == 'ru':
-               if letter in site_dict['ru-letters']:
+               if (letter.lower() in site_dict['ru-letters']) or (letter.isdigit()):
                   data += letter
 
             elif lang == 'en':
-               if letter in site_dict['eng-letters']:
+               if (letter.lower() in site_dict['eng-letters']) or (letter.isdigit()):
                   data += letter
          else:
             if '' in data:
@@ -372,13 +372,26 @@ class DataFetcher(Bs, SeqManager):
       cont_language = site_dict['content_language']
       # define an object
       obj = {}
+
+      # define a max length of the title text if it is specified
+      try:
+         max_point = site_dict[item]['title']['max_length']
+      except KeyError:
+         max_point = None
+
       for key in list_of_keys:
       # before every item of object is included to the object, there is a check
       # if a required key is in the item list of components
          if key in site_dict[item]['obj_components']:
             obj_entity = content_dict[key][order_num]
             if key == 'titles':
-               obj[key[:-1]] = DataFetcher.refine_string(item, obj_entity, site_dict, lang=cont_language)
+               text = DataFetcher.refine_string(item, obj_entity, site_dict, lang=cont_language)
+               # if the max point is specified in the json configs, the text will be sliced
+               if max_point:
+                  if len(text) >= max_point:
+                     obj[key[:-1]] = text[:max_point]
+               else:
+                  obj[key[:-1]] = max_point
             if key == 'integers':
                obj[key[:-1]] = DataFetcher.refine_string(item, obj_entity, site_dict, numbers_only=True)
             else:
