@@ -291,7 +291,14 @@ class DataFetcher(Bs, SeqManager):
          # derive all the images in the product model
          if 'images' in site_dict[item]['obj_components']:
             # here we find all the images inlined in the list object
-            images_house = obj.find_all(site_dict[item]['image']['tag'])
+            if 'class' in site_dict[item]['image']:
+               images_house = obj.find_all(site_dict[item]['image']['tag'], site_dict[item]['image']['class'])
+            else:
+               images_house = obj.find_all(site_dict[item]['image']['tag'])
+
+            # create a collection of images referred to the object
+            img_collection = []
+
             # iterate through these images to inspect then all the attributes of each one
             for i in images_house:
                attrs = i.attrs
@@ -312,8 +319,10 @@ class DataFetcher(Bs, SeqManager):
                               source, 3)
                            image_link = source[:third_slash] + '/' + i[attr][1:]
 
-                     # append this entity to the images family
-                     content['images'].append(image_link)
+                     img_collection.append(image_link)
+
+            # append this entity to the images family
+            content['images'].append(img_collection)
 
       # and eventually, the content dictionary is created and returned as a dict object
       return content

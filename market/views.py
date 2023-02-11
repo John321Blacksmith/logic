@@ -23,7 +23,7 @@ def get_just_scraped_data(category):
 	objects = great_parser.DataFetcher.structure_data(category, ali_express_confs, web_p_content)
 
 	context = {
-		'products': objects
+		'products': objects[:1]
 	}
 
 	return context
@@ -33,8 +33,8 @@ def index(request):
 	"""
 	This function renders a main page of the market.
 	"""
-	context = get_just_scraped_data('highlights')
-	return render(request, 'market/index.html', context)
+	context = get_just_scraped_data('auto_moto')
+	return render(request, 'market/test.html', context)
 
 
 def get_food(request):
