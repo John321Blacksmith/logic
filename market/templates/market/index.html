@@ -1,4 +1,5 @@
 {% extends 'market/base.html' %}
+{% load index %}
 {% block content %}
 {% for product in products %}
 	<div class="col">
@@ -9,7 +10,7 @@
 	     				<rect width="100%" height="100%" fill="#FFFFFF"/>
 	     			</clipPath>
 	     		</defs>
-	     		<image width="100%" height="250" xlink:href="{{ product.image }}" clipPath="url(#rectView)">
+	     		<image width="100%" height="250" xlink:href="{{ product.image|index:0 }}" clipPath="url(#rectView)">
 	     		</image>
 	     	</svg>
 	

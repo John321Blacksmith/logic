@@ -1,206 +1,38 @@
-{% load index %}
+{% extends 'market/base.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html>
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>carousel</title>
-	<!-- <link ref="stylesheet" href="{% static 'market/carosel_style.css' %}"> -->
-	<style>
-		* {box-sizing: border-box}
-		body {font-family: Verdana, sans-serif; margin:0}
+{% load index %}
 
-		img {vertical-align: middle;}
-
-		/*slide-show container */
-
-		.slideshow-container {
-			max-width: 1000px;
-			position: relative;
-			margin: auto;
-		}
-
-		/* hide the images by default */
-
-		.mySlides {
-			display: none;
-		}
-
-		/*next and previous buttons */
-
-		.prev, .next {
-			cursor: pointer;
-			position: absolute;
-			top: 50%;
-			width: auto;
-			margin-top: -22px;
-			padding: 16px;
-			color: white;
-			font-weight: bold;
-			font-size: 18px;
-			transition: 0.6s ease;
-			border-radius: 0 3px 3px 0;
-			user-select: none;
-		}
+{% block content %}
 
 
-		/* position the next button to the right */
-		.next {
-			right: 0;
-			border-radius: 3px 0 0 3px;
-		}
+{% for product in products %}
+	<div class="card shadow-sm">
 
-
-		.prev:hover, .next:hover {
-			background-color: rgba(0,0,0,0.8);
-		}
-
-
-		/*caption text */
-		.text {
-			color: #f2f2f2;
-			font-size: 15px;
-			padding: 8px 12px;
-			position: absolute;
-			bottom: 8px;
-			width: 100%;
-			text-align: center;
-		}
-
-
-		.numbertext {
-			color: #f2f2f2;
-			font-size: 12px;
-			padding: 8px 12px;
-			position: absolute;
-			top: 0;
-		}
-
-
-		/* the dots, bullets and indicators */
-		.dot {
-			cursor: pointer;
-			height: 15px;
-			width: 15px;
-			margin: 0 2px;
-			background-color: #bbb;
-			border-radius: 50%;
-			display: inline-block;
-			transition: background-color 0.6s ease;
-		}
-
-		.active, .dot:hover {
-			background-color: #717171;
-		}
-
-		/* fading animation  */
-		.fade {
-			animation-name: fade;
-			animation-duration: 1.5s;
-		}
-
-
-		@keyframes fade {
-			from{opacity: .4}
-			to{opacity: 1}
-		}
-	</style>
-</head>
-<body>
-	{% for product in products %}
-
-		<!-- image container -->
-		<div class="slideshow-container">
-			 <!-- individual images encapsulated in the container are below -->
-			 <div class="mySlides fade">
-			 	<div class="numbertext">{{ product.integer }} RUB</div>
-			 	<img src="{{ product.image|index:0 }}" style="width:100%">
-			 	<div class="text">{{ product.title }}</div>
-			 </div>
-			 <div class="mySlides fade">
-			 	<div class="numbertext">{{ product.integer }} RUB</div>
-			 	<img src="{{ product.image|index:1 }}" style="width:100%">
-			 	<div class="text">{{ product.title }}</div>
-			 </div>
-			 <div class="mySlides fade">
-			 	<div class="numbertext">{{ product.integer }} RUB</div>
-			 	<img src="{{ product.image|index:2 }}" style="width:100%">
-			 	<div class="text">{{ product.title }}</div>
-			 </div>
-			 <div class="mySlides fade">
-			 	<div class="numbertext">{{ product.integer }} RUB</div>
-			 	<img src="{{ product.image|index:3 }}" style="width:100%">
-			 	<div class="text">{{ product.title }}</div>
-			 </div>
-			 <div class="mySlides fade">
-			 	<div class="numbertext">{{ product.integer }} RUB</div>
-			 	<img src="{{ product.image|index:4 }}" style="width:100%">
-			 	<div class="text">{{ product.title }}</div>
-			 </div>
-			 <div class="mySlides fade">
-			 	<div class="numbertext">{{ product.integer }} RUB</div>
-			 	<img src="{{ product.image|index:5 }}" style="width:100%">
-			 	<div class="text">{{ product.title }}</div>
-			 </div>		
+		<div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+		  <div class="carousel-inner">
+		    <div class="carousel-item active">
+		      <img src="{{ product.image|index:0 }}" class="d-block w-100" alt="{{ product.title }}">
+		    </div>
+		    <div class="carousel-item">
+		      <img src="{{ product.image|index:1 }}" class="d-block w-100" alt="{{ product.title }}">
+		    </div>
+		  </div>
+		  <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+		  <a class="next" onclick="plusSlides(1)">&#10095;</a>
 		</div>
-		<br>
-		<!-- next and previous prompt buttons -->
-		<a class="prev" onclick="plusSides(-1)">&#10094;</a>
-		<a class="next" onclick="plusSides(1)">&#10095;</a>
-		<br>
-	
-		<!-- the dots and circles are below -->
-	
-		<div style="text-align: center;">
-			<span class="dot" onclick="currentSlide(0)"></span>
-			<span class="dot" onclick="currentSlide(1)"></span>
-			<span class="dot" onclick="currentSlide(2)"></span>
-			<span class="dot" onclick="currentSlide(3)"></span>
-			<span class="dot" onclick="currentSlide(4)"></span>
-			<span class="dot" onclick="currentSlide(5)"></span>
-		</div>
-	
-		{% empty %}
-		<p>There are no products yet</p>
-	{% endfor %}
+		<div class="card-body">
 
-	<script>
-		let slideIndex = 1;
-		showSlides(slideIndex)
-		
-		
-		// next, previous controls
-		function plusSlides(n) {
-			showSlides(slideIndex += n);
-		}
-		
-		
-		// Thumbnail image controls
-		function currentSlide(n) {
-			showSlides(slideIndex = n)
-		}
-		
-		function showSlides(n) {
-			let i;
-			let slides = document.getElementByClassName('mySlides');
-			let dots = document.getElementByClassName('dot');
-		
-			if (n > slides.length) {slideIndex = 1}
-			if (n < 1) {slideIndex = slides.length}
-		
-			for (i = 0; i < slides.length; i++) {
-				slides[i].style.display = 'none';
-			}
-		
-			for (i = 0, i < dots.length, i++) {
-				dots[i].className = dots[i].className.replace('active', '');
-			}
-		
-			slides[slideIndex-1].style.display = 'none';
-			dots[slideIndex-1].className += 'active';
-		}
-	</script>
+	        <p class="text">{{ product.title }}</p>
+	        <h5 style="color:green;" class="numbertext">{{ product.integer }} RUB</h5>
+	        <div class="btn-group">
+	        	<a type="button" style="background-color:blue;" class="btn btn-sm btn-outline-secondary" href="{{ product.link }}">View</a>
+	        	<button type="button" style="background-color:green;" class="btn btn-sm btn-outline-secondary">Add</button>
+	        </div>
+	    </div>
+	</div>
+	{% empty %}
+	<p>There are no products yet</p>
+{% endfor %}
 
-</body>
-</html>
+{% endblock content %}
+ 

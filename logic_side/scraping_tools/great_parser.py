@@ -299,8 +299,14 @@ class DataFetcher(Bs, SeqManager):
             # create a collection of images referred to the object
             img_collection = []
 
+            # specify how many images to load
+            if 'quantity' in site_dict[item]['image']:
+               img_amount = site_dict[item]['image']['quantity']
+            else:
+               img_amount = None
+
             # iterate through these images to inspect then all the attributes of each one
-            for i in images_house:
+            for i in images_house[:img_amount]:
                attrs = i.attrs
                # go through the attributes of each image
                for attr in attrs.keys():
