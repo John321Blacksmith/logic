@@ -33,8 +33,8 @@ def index(request):
 	"""
 	This function renders a main page of the market.
 	"""
-	context = get_just_scraped_data('auto_moto')
-	return render(request, 'market/auto_moto.html', context)
+	context = get_just_scraped_data('highlights')
+	return render(request, 'market/index.html', context)
 
 
 def get_food(request):
