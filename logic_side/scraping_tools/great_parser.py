@@ -212,7 +212,7 @@ class DataFetcher(Bs, SeqManager):
       """
 
       # a dictionary with the web data to be further structured
-      content = {'titles': [], 'integers': [], 'links': [], 'images': []}
+      content = {'titles': [], 'integers': [], 'links': [], 'images': [], 'vendors': []}
 
       # find all the individual objects on the page and get a list of them
       if loc_file:
