@@ -18,6 +18,9 @@
 
 	            <p class="card-text">{{ product.title }}</p>
 	            <h5 style="color:green;" class="text-muted">{{ product.integer }} RUB</h5>
+	            <div class="vendor-section">
+	            	<a class="vendor-link" href="{{ product.vendor_link }}">{{ product.vendor_title }}</a>
+	            </div>
 	            <div class="btn-group">
 	                <a type="button" style="background-color:blue;" class="btn btn-sm btn-outline-secondary" href="{{ product.link }}">View</a>
 	                <button type="button" style="background-color:green;" class="btn btn-sm btn-outline-secondary">Add</button>
