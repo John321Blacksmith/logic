@@ -212,7 +212,14 @@ class DataFetcher(Bs, SeqManager):
       """
 
       # a dictionary with the web data to be further structured
-      content = {'titles': [], 'integers': [], 'links': [], 'images': [], 'vendors': []}
+      content = {
+         'titles': [],
+         'integers': [],
+         'links': [],
+         'images': [],
+         'vendor_titles': [],
+         'vendor_links': []
+      }
 
       # find all the individual objects on the page and get a list of them
       if loc_file:
@@ -329,6 +336,51 @@ class DataFetcher(Bs, SeqManager):
 
             # append this entity to the images family
             content['images'].append(img_collection)
+
+         # check if anything about vendors is required
+         if 'vendor_titles' in site_dict[item]['obj_components']:
+            # find a vendor object
+            vendor = obj.find(site_dict[item]['vendor']['object']['tag'],
+                              site_dict[item]['vendor']['object']['class'])
+
+            # extract a name of the vendor from the child of the object
+            vendor_name = vendor.find(site_dict[item]['vendor']['title']['tag'],
+                                      site_dict[item]['vendor']['title']['class'])
+
+
+            # check if anything else is required for the vendor's info
+            if 'vendor_links' in site_dict[item]['obj_components']:
+               
+               # find a links of the vendor
+               vnd_url = vendor.find(site_dict[item]['vendor']['link']['tag'],
+                                     site_dict[item]['vendor']['link']['class'])
+
+               # if None, the anchor tag will be supposed to be as an object
+               if vnd_url == None:
+                  snippet = vendor['href']
+               else:
+                  snippet = vnd_url['href']
+
+               # check if the snippet is correct
+               if snippet.startswith('https://'):
+                  # in all cotrol-flow cases, "n" defines how many slashes to skip
+                  n = 0
+               if snippet.startswith('//'):
+                  n = 1
+               else:
+                  n = 3
+               # then, use the value of the "n" as a slice limit
+               slice_point = DataFetcher.inspect_signs('/', source, n)
+
+               # get a desired link of the vendor
+               vendor_link = source[:slice_point] + snippet
+
+               # send the vendor link to the "vendor_links" list
+               content['vendor_links'].append(vendor_link)
+
+            # send the vendor name to the "vendor_titles" list
+            content['vendor_titles'].append(vendor_name.text)
+
 
       # and eventually, the content dictionary is created and returned as a dict object
       return content
