@@ -40,6 +40,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     # custom apps
     'market',
+    'users',
 
     # default apps
     'django.contrib.admin',
@@ -137,3 +138,6 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# custom settings
+LOGIN_URL = 'users:login'
