@@ -39,9 +39,6 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     # custom apps
-    'market',
-    'users',
-    'menu',
 
     # default apps
     'django.contrib.admin',
