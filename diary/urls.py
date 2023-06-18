@@ -1,7 +1,7 @@
 from django.urls import path
 from . import views
 
-app_name = 'api'
+app_name = 'diary'
 urlpatterns = [
 	# collection & object API endpoints for milk
 	path('milk/', views.MilkList.as_view()),

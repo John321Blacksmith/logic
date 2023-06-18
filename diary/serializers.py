@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from diary.models import Milk, Kefir, Cheese, CabbageCheese
+from .models import Milk, Kefir, Cheese, CabbageCheese
 
 # there are serializers below which do the same things
 # and can be designed in the cleaner way; so they will be further.
