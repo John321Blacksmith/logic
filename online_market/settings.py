@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 import sys
 from pathlib import Path
-import secrs
+from . import secrs
 
 # sys.path.append(secrs.project_location)
 
@@ -39,10 +39,15 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     # custom apps
-    'diary',
+    'diary.apps.DiaryConfig',
+    'api.apps.ApiConfig',
 
     # 3rd party apps
     'rest_framework',
+    # to enable user authorization
+    'dj_rest_auth',
+    # to enable tokenization
+    'rest_framework.authtoken',
 
     # default apps
     'django.contrib.admin',
@@ -51,6 +56,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
 ]
 
 MIDDLEWARE = [
@@ -147,3 +153,15 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+SITE_ID = 1
+
+# drf settings
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication'
+    ]
+}
