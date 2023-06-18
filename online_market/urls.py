@@ -18,7 +18,13 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    
+    # api initials for the diary products
     path('api/v1/diary/', include('diary.urls')),
+    # api initials for the grocery products
+    path('api/v1/grocery/', include('grocery.urls')),
+
+    # the user oriented api endpoints
     path('api-auth/', include('rest_framework.urls')),
     path('api/v1/dj-rest-auth/', include('dj_rest_auth.urls')),
 ]
