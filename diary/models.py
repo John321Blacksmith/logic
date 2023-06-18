@@ -66,7 +66,7 @@ class Kefir(LiquidProduct):
 
 class Cheese(HardProduct):
 	"""
-	This grandcild model
+	This grandchild model
 	describes all the cheeze
 	products.
 	"""
