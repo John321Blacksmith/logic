@@ -1,7 +1,7 @@
 from django.contrib import admin
-from .models import Vegetables, Fruits
+from .models import Vegetable, Fruit
 # Register your models here.
 
 
-admin.site.register(Vegetables)
-admin.site.register(Fruits)
+admin.site.register(Vegetable)
+admin.site.register(Fruit)
