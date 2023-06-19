@@ -40,6 +40,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     # custom apps
     'diary.apps.DiaryConfig',
+    'grocery.apps.GroceryConfig',
 
     # 3rd party apps
     'rest_framework',
