@@ -23,6 +23,10 @@ urlpatterns = [
     path('api/v1/diary/', include('diary.urls')),
     # api initials for the grocery products
     path('api/v1/grocery/', include('grocery.urls')),
+    # api initials for the butcher's products
+    path('api/v1/butchers/', include('butchers.urls')),
+    # api initials for the bakery products
+    path('api/v1/bakery/', include('bakery.urls')),
 
     # the user oriented api endpoints
     path('api-auth/', include('rest_framework.urls')),

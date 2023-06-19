@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     # custom apps
     'diary.apps.DiaryConfig',
     'grocery.apps.GroceryConfig',
+    'butchers.apps.ButchersConfig',
+    'bakery.apps.BakeryConfig',
 
     # 3rd party apps
     'rest_framework',
