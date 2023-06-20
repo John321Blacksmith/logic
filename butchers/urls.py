@@ -1,8 +1,13 @@
-from django.urls import path
-from . import views
+from django.urls import path, include
+from rest_framework import routers
+from .views import MeatViewSet
+
+
+router = routers.DefaultRouter()
+router.register(r'', MeatViewSet)
+
 
 app_name = 'butchers'
 urlpatterns = [
-	path('', views.MeatList.as_view()),
-	path('<int:pk>/', views.MeatDetail.as_view()),
+	path('', include(router.urls)),
 ]

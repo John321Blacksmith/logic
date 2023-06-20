@@ -1,14 +1,9 @@
-from rest_framework import generics
+from rest_framework import viewsets
 from .models import Meat
 from .serializers import MeatSerializer
 
 # Create your views here.
 
-class MeatList(generics.ListCreateAPIView):
-	queryset = Meat.objects.all()
-	serializer_class = MeatSerializer
-
-
-class MeatDetail(generics.RetrieveUpdateDestroyAPIView):
+class MeatViewSet(viewsets.ModelViewSet):
 	queryset = Meat.objects.all()
 	serializer_class = MeatSerializer
