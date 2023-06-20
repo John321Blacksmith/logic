@@ -1,4 +1,4 @@
-from rest_framework import generics
+from rest_framework import viewsets
 from .models import Milk, Kefir, Cheese, CabbageCheese
 from .serializers import MilkSerializer, KefirSerializer, CheeseSerializer, CabbCheeseSerializer
 
@@ -8,46 +8,29 @@ from .serializers import MilkSerializer, KefirSerializer, CheeseSerializer, Cabb
 # and can be simplified sooner
 
 #######Milk API
-class MilkList(generics.ListCreateAPIView):
-	queryset = Milk.objects.all()
-	serializer_class = MilkSerializer
-
-
-class MilkDetail(generics.RetrieveUpdateDestroyAPIView):
+class MilkViewSet(viewsets.ModelViewSet):
 	queryset = Milk.objects.all()
 	serializer_class = MilkSerializer
 
 #######
 
 #######Kefir API
-class KefirList(generics.ListCreateAPIView):
+class KefirViewSet(viewsets.ModelViewSet):
 	queryset = Kefir.objects.all()
 	serializer_class = KefirSerializer
 
-
-class KefirDetail(generics.RetrieveUpdateDestroyAPIView):
-	queryset = Kefir.objects.all()
-	serializer_class = KefirSerializer
 #######
 
 #######Cheese API
-class CheeseList(generics.ListCreateAPIView):
+class CheeseViewSet(viewsets.ModelViewSet):
 	queryset = Cheese.objects.all()
 	serializer_class = CheeseSerializer
 
-
-class CheeseDetail(generics.RetrieveUpdateDestroyAPIView):
-	queryset = Cheese.objects.all()
-	serializer_class = CheeseSerializer
 #######
 
 #######CabbageCheese API
-class CabbCheeseList(generics.ListCreateAPIView):
+class CabbCheeseViewSet(viewsets.ModelViewSet):
 	queryset = CabbageCheese.objects.all()
 	serializer_class = CabbCheeseSerializer
 
-
-class CabbCheeseDetail(generics.RetrieveUpdateDestroyAPIView):
-	queryset = CabbageCheese.objects.all()
-	serializer_class = CabbCheeseSerializer
 #######

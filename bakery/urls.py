@@ -1,8 +1,13 @@
-from django.urls import path
-from . import views
+from django.urls import path, include
+from rest_framework import routers
+from .views import BreadViewSet
+
+
+router = routers.DefaultRouter()
+router.register(r'', BreadViewSet)
+
 
 app_name = 'bakery'
 urlpatterns = [
-	path('', views.BreadList.as_view()),
-	path('<int:pk>/', views.BreadDetail.as_view()),
+	path('', include(router.urls)),
 ]

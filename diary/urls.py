@@ -1,21 +1,15 @@
-from django.urls import path
-from . import views
+from django.urls import path, include
+from .views import MilkViewSet, KefirViewSet, CheeseViewSet, CabbCheeseViewSet
+from rest_framework import routers
+
+router = routers.DefaultRouter()
+router.register(r'milk', MilkViewSet, basename='milk')
+router.register(r'kefir', KefirViewSet, basename='kefir')
+router.register(r'cheese', CheeseViewSet, basename='cheese')
+router.register(r'cabb-cheese', CabbCheeseViewSet, basename='cabb-cheese')
 
 app_name = 'diary'
+
 urlpatterns = [
-	# collection & object API endpoints for milk
-	path('milk/', views.MilkList.as_view()),
-	path('milk/<int:pk>/', views.MilkDetail.as_view()),
-
-	# collection & object API endpoints for kefir
-	path('kefir/', views.KefirList.as_view()),
-	path('kefir/<int:pk>/', views.KefirDetail.as_view()),
-
-	# collection & object API endpoints for cheese
-	path('cheese/', views.CheeseList.as_view()),
-	path('cheese/<int:pk>/', views.CheeseDetail.as_view()),
-
-	# collection & object API endpoints for cabbage-cheese
-	path('cabbage-cheese/', views.CabbCheeseList.as_view()),
-	path('cabbage-cheese/<int:pk>/', views.CabbCheeseDetail.as_view()),
+	path('diary/', include(router.urls)),
 ]

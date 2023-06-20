@@ -1,14 +1,9 @@
-from rest_framework import generics
+from rest_framework import viewsets
 from .models import Bread
 from .serializers import BreadSerializer
 
 # Create your views here.
 
-class BreadList(generics.ListCreateAPIView):
-	queryset = Bread.objects.all()
-	serializer_class = BreadSerializer
-
-	
-class BreadDetail(generics.RetrieveUpdateDestroyAPIView):
+class BreadViewSet(viewsets.ModelViewSet):
 	queryset = Bread.objects.all()
 	serializer_class = BreadSerializer

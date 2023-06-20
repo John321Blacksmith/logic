@@ -1,13 +1,14 @@
-from django.urls import path
-from . import views
+from django.urls import path, include
+from rest_framework import routers
+from .views import VegetableViewSet, FruitViewSet
+
+
+router = routers.DefaultRouter()
+router.register(r'vegetables', VegetableViewSet)
+router.register(r'fruits', FruitViewSet)
 
 
 app_name = 'grocery'
 urlpatterns = [
-	path('vegetables/', views.VegetableList.as_view()),
-	path('vegetables/<int:pk>/', views.VegetableDetail.as_view()),
-	
-	path('fruits/', views.FruitList.as_view()),
-	path('fruits/<int:pk>/', views.FruitDetail.as_view()),
-
+	path('', include(router.urls)),
 ]

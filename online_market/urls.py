@@ -16,18 +16,22 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
+
 urlpatterns = [
     path('admin/', admin.site.urls),
-    
-    # api initials for the diary products
-    path('api/v1/diary/', include('diary.urls')),
-    # api initials for the grocery products
-    path('api/v1/grocery/', include('grocery.urls')),
-    # api initials for the butcher's products
-    path('api/v1/butchers/', include('butchers.urls')),
-    # api initials for the bakery products
-    path('api/v1/bakery/', include('bakery.urls')),
 
+    # api endpoint initial for the diary store
+    path('api/v1/diary/', include('diary.urls')),
+
+    # api endpoint initial for the grocery store
+    path('api/v1/grocery/', include('grocery.urls')),
+
+    # api endpoint initial for the butchers store
+    path('api/v1/butchers/', include('butchers.urls')),
+
+    # api endpoint initial for the bakery store
+    path('api/v1/bakery/', include('bakery.urls')),
+    
     # the user oriented api endpoints
     path('api-auth/', include('rest_framework.urls')),
     path('api/v1/dj-rest-auth/', include('dj_rest_auth.urls')),
